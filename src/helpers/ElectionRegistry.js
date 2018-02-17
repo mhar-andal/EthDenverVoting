@@ -1,6 +1,6 @@
-import Promise from 'bluebird';
-import Web3 from 'web3';
-import { promisify } from 'util';
+import Promise from "bluebird";
+import Web3 from "web3";
+import { promisify } from "util";
 
 export default class ElectionRegistry {
   constructor(contract) {
@@ -12,9 +12,11 @@ export default class ElectionRegistry {
     );
 
     const newElection = Promise.promisify(
-      this.contract.newElection.call,
-      { context: this.contract.newElection }
-    )
+      this.contract.newElection.sendTransaction,
+      {
+        context: this.contract.newElection
+      }
+    );
 
     this.methods = {
       getElectionContract,
@@ -35,14 +37,16 @@ export default class ElectionRegistry {
         delay = Math.floor(1.5 * delay);
       }
     }
-    throw new Error('Timed out waiting for votes to be recorded in a block.');
+    throw new Error("Timed out waiting for votes to be recorded in a block.");
   }
 
   async fetchElectionContract(title) {
     const electionContract = await this.methods.getElectionContract(title);
   }
 
-  async newElection(title) {
-    return this.methods.newElection(title);
+  async newElection(title, address) {
+    return this.methods.newElection("poop", {
+      from: "0xaa26d0428985d9a865441a19da1ebe7ab4049db6"
+    });
   }
 }
