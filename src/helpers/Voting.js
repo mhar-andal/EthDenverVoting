@@ -55,11 +55,15 @@ export default class Voting {
   }
 
   async initCandidateList() {
+    //TODO: add timestamp to ballot
+
     const hexCandidateList = await this.methods.getCandidateList();
     return (this.candidateList = hexCandidateList.map(hexToAscii));
   }
 
   async voteForCandidate(name) {
+    //TODO: add presubmit check as defined in google doc
+
     try {
       const tx = await this.methods.voteForCandidate(asciiToHex(name), {
         gas: 100000,
