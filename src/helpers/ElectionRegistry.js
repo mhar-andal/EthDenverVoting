@@ -3,8 +3,9 @@ import Web3 from "web3";
 import { promisify } from "util";
 
 export default class ElectionRegistry {
-  constructor(contract) {
+  constructor(contract, web3) {
     this.contract = contract;
+    this.web3 = web3;
 
     const getElectionContract = Promise.promisify(
       this.contract.getElectionContract.call,
@@ -13,9 +14,7 @@ export default class ElectionRegistry {
 
     const newElection = Promise.promisify(
       this.contract.newElection.sendTransaction,
-      {
-        context: this.contract.newElection
-      }
+      { context: this.contract.newElection }
     );
 
     this.methods = {
@@ -45,8 +44,15 @@ export default class ElectionRegistry {
   }
 
   async newElection(title, address) {
-    return this.methods.newElection("poop", {
-      from: "0xaa26d0428985d9a865441a19da1ebe7ab4049db6"
-    });
+    return new Promise((good, bad) => {
+      window.web3.personal.unlockAccount(
+        '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
+        good
+      )
+    }).then(() => {
+      this.methods.newElection("poop", {
+        from: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+      });
+    })
   }
 }

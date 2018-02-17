@@ -7,7 +7,7 @@ contract ElectionRegistry {
 
     mapping(string => address) getContract;
 
-    function electionRegistry() public {
+    function ElectionRegistry() public {
       registryOwner = msg.sender;
     }
 

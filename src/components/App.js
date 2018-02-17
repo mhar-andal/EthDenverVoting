@@ -42,10 +42,13 @@ class App extends React.Component {
       "ElectionRegistry"
     ]);
     window.web3 = web3;
+    const web3client = new Web3Client(web3);
     window.contracts = contracts;
     const poll = new Voting(contracts.Voting);
-    const electionRegistry = new ElectionRegistry(contracts.ElectionRegistry);
-    const web3client = new Web3Client(web3);
+    const electionRegistry = new ElectionRegistry(
+      contracts.ElectionRegistry,
+      web3client
+    );
     await poll.initCandidateList();
     const votes = await poll.fetchCandidateVotes();
     this.setState({
