@@ -10,15 +10,17 @@ import reactLogo from '../reactLogo.svg';
 import ethereumLogo from '../ethereumLogo.svg';
 import UserAccounts from './UserAccounts';
 import './App.css';
+import ResultsTable from './ResultsTable';
+import Navigation from './Tabs';
 
 class App extends React.Component {
-  state: {
-    votePending: boolean,
-    votes: any,
-    poll: any,
-  };
+  // setState: {
+  //   votePending: boolean,
+  //   votes: any,
+  //   poll: any,
+  // };
 
-  constructor(props: { network: string }) {
+  constructor(props) {
     super(props);
     this.state = {
       votePending: false,
@@ -43,7 +45,7 @@ class App extends React.Component {
     });
   }
 
-  voteHandler = (name: string) => async () => {
+  voteHandler = (name) => async () => {
     this.setState({ votePending: true });
     const votes = await this.state.poll.voteForCandidate(name);
     this.setState({ votes, votePending: false });
@@ -51,23 +53,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <Container>
-        <h1>
-          <img src={reactLogo} alt="reactLogo" /> React, meet Ethereum{' '}
-          <img src={ethereumLogo} alt="reactLogo" />{' '}
-        </h1>
-        <UserAccounts
-          accounts={this.state.accounts}
-        />
-        {this.state.votes ? (
-          <VotingTable
-            candidateList={this.state.poll.candidateList}
-            votes={this.state.votes}
-            voteHandler={this.voteHandler}
-            votePending={this.state.votePending}
+
+   <div>
+          <Navigation resultsTable={ this.state.votes ? (<ResultsTable 
+                  candidateList={this.state.poll.candidateList}
+                    votes={this.state.votes}
+                    voteHandler={this.voteHandler}
+                    votePending={this.state.votePending}
+                    />) : null }
+                    votingTable={ this.state.votes ? (
+         
+                      <VotingTable
+                        candidateList={this.state.poll.candidateList}
+                        votes={this.state.votes}
+                        voteHandler={this.voteHandler}
+                        votePending={this.state.votePending}
+                      />
+                    ) : null}
           />
-        ) : null}
-      </Container>
+       
+      </div>
     );
   }
 }
