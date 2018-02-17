@@ -23,7 +23,7 @@ const CandidateRow = ({ name, votes, onClick }) => (
 
 const ResultsTable = props => (
   <div>
-    <h1> Review </h1>
+    <h1> Finalize </h1>
     <Table bordered>
       <thead>
         <tr>

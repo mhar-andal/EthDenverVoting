@@ -5,12 +5,10 @@ import { Table, Button, Progress } from "reactstrap";
 import FlatButton from "material-ui/FlatButton";
 import UserHeading from "../components/UserHeading";
 
-// const votingTableProps = {
-//   candidateList: {},
-//   votes: { name },
-//   voteHandler: () => {},
-//   votePending: false,
-// };
+const style = {
+  margin: 12,
+  float: "right"
+};
 
 const CandidateRow = ({ name, votes, votePending, onClick }) => (
   <tr>
@@ -61,7 +59,6 @@ const VotingTable = props => (
         ))}
       </tbody>
     </Table>
-    <Button />
   </div>
 );
 

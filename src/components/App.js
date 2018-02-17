@@ -58,6 +58,8 @@ class App extends React.Component {
     return (
       <div>
         <Navigation
+          firstName="Test"
+          lastName="User"
           resultsTable={
             this.state.votes ? (
               <ResultsTable
