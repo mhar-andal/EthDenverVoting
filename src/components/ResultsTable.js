@@ -15,21 +15,17 @@ import UserHeading from "../components/UserHeading";
 const CandidateRow = ({ name, votes, onClick }) => (
   <tr>
     <td>
-      <FlatButton
-        label={name}
-        primary={true}
-        onClick={onClick}
-      />
+      <FlatButton label={name} primary={true} onClick={onClick} />
     </td>
     <td>{votes}</td>
   </tr>
 );
 
 const ResultsTable = props => (
-    <div>
-                <h1> Results </h1>
+  <div>
+    <h1> Review </h1>
     <Table bordered>
-        <thead>
+      <thead>
         <tr>
           <th>Topic</th>
           <th>Votes</th>
@@ -40,13 +36,13 @@ const ResultsTable = props => (
           <CandidateRow
             key={name}
             name={name}
-            votes={props.votes[name]} 
+            votes={props.votes[name]}
             onClick={() => {}}
           />
         ))}
-    </tbody>
+      </tbody>
     </Table>
-    </div>
+  </div>
 );
 
 export default ResultsTable;
