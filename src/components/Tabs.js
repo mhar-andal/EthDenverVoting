@@ -18,7 +18,6 @@ export default class Navigation extends React.Component {
       value: 'a',
     };
   }
-
   handleChange = value => {
     this.setState({
       value: value,
@@ -33,8 +32,8 @@ export default class Navigation extends React.Component {
       >
               <Tab label="Vote" value="a">
           {this.props.votingTable}
-        </Tab>
-        <Tab label="Results" value="b">
+        </Tab> 
+        <Tab label="Review" value="b">
           {this.props.resultsTable}
         </Tab>
       </Tabs>
