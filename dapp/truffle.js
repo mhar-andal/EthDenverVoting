@@ -1,7 +1,7 @@
-const PrivateKeyProvider = require('truffle-privatekey-provider');
+const PrivateKeyProvider = require("truffle-privatekey-provider");
 
 const ethPrivateKey = process.env.ETH_PK;
-const infuraId = process.env.INFURA_ID || '';
+const infuraId = process.env.INFURA_ID || "";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -9,45 +9,46 @@ module.exports = {
   networks: {
     // ganache-cli
     development: {
-      host: '127.0.0.1',
+      host: "127.0.0.1",
       port: 8545,
-      network_id: '*',
+      network_id: "*",
+      from: "0xaa26d0428985d9a865441a19da1ebe7ab4049db6"
     },
     // truffle develop
     develop: {
-      host: '127.0.0.1',
+      host: "127.0.0.1",
       port: 9545,
-      network_id: '*',
+      network_id: "*"
     },
     // Ganache UI
     ganacheUI: {
-      host: '127.0.0.1',
+      host: "127.0.0.1",
       port: 7545,
-      network_id: '*',
+      network_id: "*"
     },
     // rinkeby
     rinkeby: {
       provider: () =>
         new PrivateKeyProvider(
           ethPrivateKey,
-          `https://rinkeby.infura.io/${infuraId}`,
+          `https://rinkeby.infura.io/${infuraId}`
         ),
       network_id: 4,
       gas: 500000,
-      gasPrice: 4000000000,
+      gasPrice: 4000000000
     },
     // live Ethereum network
     live: {
       provider: () =>
         new PrivateKeyProvider(
           ethPrivateKey,
-          `https://mainnet.infura.io/${infuraId}`,
+          `https://mainnet.infura.io/${infuraId}`
         ),
       network_id: 1,
       // Set the gas and gasPrice very carefully.
       // If set incorrectly they can prevent deploys, or clean out your account!
       gas: 500000,
-      gasPrice: 4000000000,
-    },
-  },
+      gasPrice: 4000000000
+    }
+  }
 };
