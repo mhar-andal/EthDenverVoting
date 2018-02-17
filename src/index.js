@@ -4,7 +4,15 @@
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
-
+import {
+  blueA700,
+  blueA400,
+  redA700,
+  white,
+  darkBlack,
+  fullBlack
+} from "material-ui/styles/colors";
+import spacing from "material-ui/styles/spacing";
 import React from "react";
 import ReactDOM from "react-dom";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
@@ -12,8 +20,19 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import AppBar from "material-ui/AppBar";
 
+const muiTheme = getMuiTheme({
+  spacing: spacing,
+  fontFamily: "Roboto, sans-serif",
+  palette: {
+    primary1Color: blueA700,
+    primary2Color: blueA700,
+    accent1Color: redA700,
+    pickerHeaderColor: blueA400
+  }
+});
+
 const Main = props => (
-  <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <AppBar title="Absentee Voting" />
     <App {...props} />
   </MuiThemeProvider>

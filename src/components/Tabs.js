@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, Tab } from "material-ui/Tabs";
-import { Table, Button, Progress, Container } from "reactstrap";
+import { Table, Button, Container } from "reactstrap";
+
 const styles = {
   headline: {
     fontSize: 24,
@@ -34,62 +35,63 @@ export default class Navigation extends React.Component {
 
   render() {
     return this.state.value !== "d" ? (
-      <Tabs value={this.state.value} onChange={this.handleChange}>
-        <Tab label="Home" value="a">
-          <Container>
-            <div>
-              <h1>
-                Welcome {this.props.firstName} {this.props.lastName}!
-              </h1>
-              <h2>Absentee Voting</h2>
-              Vote using this blockchain-powered voting system to ensure your
-              voice gets heard.
-            </div>
+      <div>
+        <Tabs value={this.state.value} onChange={this.handleChange}>
+          <Tab label="Home" value="a">
+            <Container>
+              <div>
+                <h1>
+                  Welcome {this.props.firstName} {this.props.lastName}!
+                </h1>
+                <h2>Absentee Voting</h2>
+                Vote with this secure, blockchain-powered voting system.
+              </div>
+              <Button
+                color="primary"
+                style={style}
+                onClick={() => {
+                  this.handleChange("b");
+                }}
+              >
+                Get Started
+              </Button>
+            </Container>
+          </Tab>
+          <Tab label="Vote" value="b">
+            {this.props.votingTable}
             <Button
               color="primary"
               style={style}
               onClick={() => {
+                this.handleChange("c");
+              }}
+            >
+              Submit
+            </Button>
+          </Tab>
+          <Tab label="Review" value="c">
+            {this.props.resultsTable}
+            <Button
+              color="primary"
+              style={styleBack}
+              onClick={() => {
                 this.handleChange("b");
               }}
             >
-              Get Started
+              Back
             </Button>
-          </Container>
-        </Tab>
-        <Tab label="Vote" value="b">
-          {this.props.votingTable}
-          <Button
-            color="primary"
-            style={style}
-            onClick={() => {
-              this.handleChange("c");
-            }}
-          >
-            Submit
-          </Button>
-        </Tab>
-        <Tab label="Review" value="c">
-          {this.props.resultsTable}
-          <Button
-            color="primary"
-            style={styleBack}
-            onClick={() => {
-              this.handleChange("b");
-            }}
-          >
-            Back
-          </Button>
-          <Button
-            color="primary"
-            style={style}
-            onClick={() => {
-              this.handleChange("d");
-            }}
-          >
-            Submit
-          </Button>
-        </Tab>
-      </Tabs>
+            <Button
+              color="primary"
+              style={style}
+              onClick={() => {
+                this.handleChange("d");
+              }}
+            >
+              Submit
+            </Button>
+          </Tab>
+        </Tabs>
+      </div>
     ) : (
       <Container>
         <div>
