@@ -5,7 +5,7 @@ export const Strong = styled.div`
   font-family: "Work Sans", sans-serif;
   text-transform: uppercase;
   font-weight: 900;
-  letter-spacing: 1em;
+  letter-spacing: 0.5em;
   margin-top: 40px;
 `;
 

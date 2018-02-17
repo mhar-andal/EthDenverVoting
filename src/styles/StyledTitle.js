@@ -34,7 +34,7 @@ export const StyledTitle = styled.div`
   -webkit-background-clip: text;
   background-clip: text;
   animation-name: ${StyledKeyframe};
-  animation-duration: 20s;
+  animation-duration: 15s;
   animation-iteration-count: infinite;
 }
 `;
