@@ -29,7 +29,8 @@ class App extends React.Component {
   }
 
   async componentDidMount(): any {
-    const { contracts, web3 } = await fetchContracts(this.props.network, ['Voting']);
+    const { contracts, web3 } = await fetchContracts(this.props.network, ['Voting', 'ElectionRegistry']);
+    console.log('contract', contracts);
     const poll = new Voting(contracts.Voting);
     const web3client = new Web3Client(web3)
     await poll.initCandidateList();
@@ -49,7 +50,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log('props', this.state);
     return (
       <Container>
         <h1>

@@ -48,7 +48,7 @@ class UserAccounts extends Component {
             {
               this.props.accounts && this.props.accounts.map((account, index) => {
                 return (
-                  <TableRow onCellClick={() => console.log('FUCK YA')}>
+                  <TableRow>
                     <TableRowColumn>{account}</TableRowColumn>
                     <TableRowColumn>{names[index]}</TableRowColumn>
                     <TableRowColumn style={{ color: 'green' }}>Eligible</TableRowColumn>
