@@ -135,7 +135,6 @@ class App extends React.Component {
             <TextField
               floatingLabelFixed={true}
               floatingLabelText="Election Name"
-              textColor="black"
               fullWidth={true}
               onChange={e => {
                 this.setState({});
