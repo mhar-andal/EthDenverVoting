@@ -11,6 +11,7 @@ import ethereumLogo from '../ethereumLogo.svg';
 import UserAccounts from './UserAccounts';
 import './App.css';
 import ResultsTable from './ResultsTable';
+import Navigation from './Tabs';
 
 class App extends React.Component {
   // setState: {
@@ -52,24 +53,26 @@ class App extends React.Component {
   render() {
     console.log('props', this.state);
     return (
-      <Container>
-        {this.state.votes ? (
-          <div>
-          <ResultsTable 
+
+   <div>
+          <Navigation resultsTable={ this.state.votes ? (<ResultsTable 
                   candidateList={this.state.poll.candidateList}
                     votes={this.state.votes}
                     voteHandler={this.voteHandler}
                     votePending={this.state.votePending}
-                    />
-          <VotingTable
-            candidateList={this.state.poll.candidateList}
-            votes={this.state.votes}
-            voteHandler={this.voteHandler}
-            votePending={this.state.votePending}
+                    />) : null }
+                    votingTable={ this.state.votes ? (
+         
+                      <VotingTable
+                        candidateList={this.state.poll.candidateList}
+                        votes={this.state.votes}
+                        voteHandler={this.voteHandler}
+                        votePending={this.state.votePending}
+                      />
+                    ) : null}
           />
-          </div>
-        ) : null}
-      </Container>
+       
+      </div>
     );
   }
 }

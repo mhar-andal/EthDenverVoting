@@ -14,7 +14,7 @@ import AppBar from 'material-ui/AppBar';
 
 const Main = props => (
   <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-    <AppBar title="My AppBar" />
+    <AppBar title="Absentee Voting" />
     <App {...props} />
   </MuiThemeProvider>
 );
