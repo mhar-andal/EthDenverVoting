@@ -24,7 +24,7 @@ const fetchContracts = async (network, contractNames) => {
     contracts[name] = contract;
     return contractInfo;
   });
-  return { contracts };
+  return { contracts, web3: localWeb3 };
 };
 
 export default fetchContracts;

@@ -31,7 +31,7 @@ contract Voting is mortal {
   }
 
   function validCandidate(bytes32 candidate) public view returns (bool) {
-    for(uint i = 0; i < candidateList.length; i++) {
+    for (uint i = 0; i < candidateList.length; i++) {
       if (candidateList[i] == candidate) {
         return true;
       }
