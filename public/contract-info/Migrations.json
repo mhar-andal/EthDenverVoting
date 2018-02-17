@@ -4,7 +4,7 @@
     "networkLocation": {
       "host": "127.0.0.1",
       "port": 8545,
-      "network_id": "1518850781767"
+      "network_id": "1518863515087"
     },
     "contractName": "Migrations",
     "abi": [
@@ -85,8 +85,8 @@
       "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
     },
     "schemaVersion": "1.0.1",
-    "updatedAt": "2018-02-17T07:00:31.794Z",
-    "address": "0xbf01bfbc3c3fc406bf90407e43e8cca0e8c2c17d",
-    "network_id": "1518850781767"
+    "updatedAt": "2018-02-17T10:32:07.639Z",
+    "address": "0x729da3b1b5530c84ab79e0bc3cc0308b83a1c1b2",
+    "network_id": "1518863515087"
   }
 }
