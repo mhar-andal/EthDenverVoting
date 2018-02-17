@@ -44,15 +44,8 @@ export default class ElectionRegistry {
   }
 
   async newElection(title, address) {
-    return new Promise((good, bad) => {
-      this.web3.personal.unlockAccount(
-        '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
-        good
-      )
-    }).then(() => {
-      this.methods.newElection("poop", {
-        from: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
-      });
-    })
+    return this.methods.newElection("poop", {
+      from: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    });
   }
 }
