@@ -12,13 +12,13 @@ import UserAccounts from './UserAccounts';
 import './App.css';
 
 class App extends React.Component {
-  state: {
-    votePending: boolean,
-    votes: any,
-    poll: any,
-  };
+  // setState: {
+  //   votePending: boolean,
+  //   votes: any,
+  //   poll: any,
+  // };
 
-  constructor(props: { network: string }) {
+  constructor(props) {
     super(props);
     this.state = {
       votePending: false,
@@ -42,7 +42,7 @@ class App extends React.Component {
     });
   }
 
-  voteHandler = (name: string) => async () => {
+  voteHandler = (name) => async () => {
     this.setState({ votePending: true });
     const votes = await this.state.poll.voteForCandidate(name);
     this.setState({ votes, votePending: false });
@@ -52,13 +52,6 @@ class App extends React.Component {
     console.log('props', this.state);
     return (
       <Container>
-        <h1>
-          <img src={reactLogo} alt="reactLogo" /> React, meet Ethereum{' '}
-          <img src={ethereumLogo} alt="reactLogo" />{' '}
-        </h1>
-        <UserAccounts
-          accounts={this.state.accounts}
-        />
         {this.state.votes ? (
           <VotingTable
             candidateList={this.state.poll.candidateList}
