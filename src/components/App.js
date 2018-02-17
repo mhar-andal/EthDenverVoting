@@ -10,6 +10,7 @@ import reactLogo from '../reactLogo.svg';
 import ethereumLogo from '../ethereumLogo.svg';
 import UserAccounts from './UserAccounts';
 import './App.css';
+import ResultsTable from './ResultsTable';
 
 class App extends React.Component {
   // setState: {
@@ -53,12 +54,20 @@ class App extends React.Component {
     return (
       <Container>
         {this.state.votes ? (
+          <div>
+          <ResultsTable 
+                  candidateList={this.state.poll.candidateList}
+                    votes={this.state.votes}
+                    voteHandler={this.voteHandler}
+                    votePending={this.state.votePending}
+                    />
           <VotingTable
             candidateList={this.state.poll.candidateList}
             votes={this.state.votes}
             voteHandler={this.voteHandler}
             votePending={this.state.votePending}
           />
+          </div>
         ) : null}
       </Container>
     );

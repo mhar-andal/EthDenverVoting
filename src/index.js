@@ -22,7 +22,7 @@ const Main = props => (
 // export default Main;
 
 const env = {
-  network: process.env.REACT_APP_ETH_NETWORK || 'development', // Default to Ganache CLI
+  network: 'development', // Default to Ganache CLI
 };
 ReactDOM.render(<Main {...env} />, document.getElementById('root'));
 
