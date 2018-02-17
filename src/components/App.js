@@ -1,17 +1,17 @@
 // @flow
 
-import React from 'react';
-import { Container } from 'reactstrap';
-import VotingTable from './VotingTable';
-import fetchContracts from '../helpers/fetchContracts';
-import Voting from '../helpers/Voting';
-import Web3Client from '../helpers/Web3Client';
-import reactLogo from '../reactLogo.svg';
-import ethereumLogo from '../ethereumLogo.svg';
-import UserAccounts from './UserAccounts';
-import './App.css';
-import ResultsTable from './ResultsTable';
-import Navigation from './Tabs';
+import React from "react";
+import { Container } from "reactstrap";
+import VotingTable from "./VotingTable";
+import fetchContracts from "../helpers/fetchContracts";
+import Voting from "../helpers/Voting";
+import Web3Client from "../helpers/Web3Client";
+import reactLogo from "../reactLogo.svg";
+import ethereumLogo from "../ethereumLogo.svg";
+import UserAccounts from "./UserAccounts";
+import "./App.css";
+import ResultsTable from "./ResultsTable";
+import Navigation from "./Tabs";
 
 class App extends React.Component {
   // setState: {
@@ -26,26 +26,29 @@ class App extends React.Component {
       votePending: false,
       votes: null,
       poll: null,
-      accounts: null,
+      accounts: null
     };
   }
 
   async componentDidMount(): any {
-    const { contracts, web3 } = await fetchContracts(this.props.network, ['Voting', 'ElectionRegistry']);
-    console.log('contract', contracts);
+    const { contracts, web3 } = await fetchContracts(this.props.network, [
+      "Voting",
+      "ElectionRegistry"
+    ]);
+    console.log("contract", contracts);
     const poll = new Voting(contracts.Voting);
-    const web3client = new Web3Client(web3)
+    const web3client = new Web3Client(web3);
     await poll.initCandidateList();
     const votes = await poll.fetchCandidateVotes();
     this.setState({
       votes,
       poll,
       web3client,
-      accounts: web3client.getAccounts(),
+      accounts: web3client.getAccounts()
     });
   }
 
-  voteHandler = (name) => async () => {
+  voteHandler = name => async () => {
     this.setState({ votePending: true });
     const votes = await this.state.poll.voteForCandidate(name);
     this.setState({ votes, votePending: false });
@@ -53,25 +56,29 @@ class App extends React.Component {
 
   render() {
     return (
-
-   <div>
-          <Navigation resultsTable={ this.state.votes ? (<ResultsTable 
-                  candidateList={this.state.poll.candidateList}
-                    votes={this.state.votes}
-                    voteHandler={this.voteHandler}
-                    votePending={this.state.votePending}
-                    />) : null }
-                    votingTable={ this.state.votes ? (
-         
-                      <VotingTable
-                        candidateList={this.state.poll.candidateList}
-                        votes={this.state.votes}
-                        voteHandler={this.voteHandler}
-                        votePending={this.state.votePending}
-                      />
-                    ) : null}
-          />
-       
+      <div>
+        <Navigation
+          resultsTable={
+            this.state.votes ? (
+              <ResultsTable
+                candidateList={this.state.poll.candidateList}
+                votes={this.state.votes}
+                voteHandler={this.voteHandler}
+                votePending={this.state.votePending}
+              />
+            ) : null
+          }
+          votingTable={
+            this.state.votes ? (
+              <VotingTable
+                candidateList={this.state.poll.candidateList}
+                votes={this.state.votes}
+                voteHandler={this.voteHandler}
+                votePending={this.state.votePending}
+              />
+            ) : null
+          }
+        />
       </div>
     );
   }

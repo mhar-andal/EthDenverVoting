@@ -61,7 +61,7 @@ const VotingTable = props => (
         ))}
       </tbody>
     </Table>
-    <Button/>
+    <Button />
   </div>
 );
 
