@@ -1,7 +1,9 @@
 import React from "react";
 import { Tabs, Tab } from "material-ui/Tabs";
 import { Table, Button, Container } from "reactstrap";
-
+import { StyledTitle } from "../styles/StyledTitle";
+import { Strong } from "../styles/Strong";
+import { Arrow } from "../styles/Arrow";
 const styles = {
   headline: {
     fontSize: 24,
@@ -13,11 +15,14 @@ const styles = {
 
 const style = {
   margin: 12,
+  positionY: "50%",
   float: "right"
 };
 
 const styleBack = {
-  margin: 12
+  margin: 12,
+  positionY: "50%",
+  float: "left"
 };
 
 export default class Navigation extends React.Component {
@@ -39,34 +44,29 @@ export default class Navigation extends React.Component {
         <Tabs value={this.state.value} onChange={this.handleChange}>
           <Tab label="Home" value="a">
             <Container>
-              <div>
-                <h1>
-                  Welcome {this.props.firstName} {this.props.lastName}!
-                </h1>
-                <h2>Absentee Voting</h2>
-                Vote with this secure, blockchain-powered voting system.
-              </div>
-              <Button
-                color="primary"
-                style={style}
-                onClick={() => {
-                  this.handleChange("b");
-                }}
-              >
-                Get Started
-              </Button>
+              <Strong>Make it count</Strong>
+              <StyledTitle>Vote</StyledTitle>
             </Container>
+            <Button
+              color="primary"
+              style={style}
+              onClick={() => {
+                this.handleChange("b");
+              }}
+            >
+              <Arrow>></Arrow>
+            </Button>
           </Tab>
           <Tab label="Vote" value="b">
             {this.props.votingTable}
             <Button
-              color="primary"
+              color={"primary"}
               style={style}
               onClick={() => {
                 this.handleChange("c");
               }}
             >
-              Submit
+              <Arrow>></Arrow>
             </Button>
           </Tab>
           <Tab label="Review" value="c">
@@ -78,7 +78,7 @@ export default class Navigation extends React.Component {
                 this.handleChange("b");
               }}
             >
-              Back
+              <Arrow> {"<"} </Arrow>
             </Button>
             <Button
               color="primary"
@@ -87,7 +87,7 @@ export default class Navigation extends React.Component {
                 this.handleChange("d");
               }}
             >
-              Submit
+              <Arrow>></Arrow>
             </Button>
           </Tab>
         </Tabs>
@@ -95,8 +95,11 @@ export default class Navigation extends React.Component {
     ) : (
       <Container>
         <div>
-          <h1>Votes Finalized</h1>
-          Thanks for voting, {this.props.firstName} {this.props.lastName}!
+          <Strong />
+          <StyledTitle>Thanks</StyledTitle>
+          <Strong>
+            Thanks for voting, {this.props.firstName} {this.props.lastName}!
+          </Strong>
         </div>
       </Container>
     );

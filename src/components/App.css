@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Shrikhand");
+@import url('https://fonts.googleapis.com/css?family=Passion+One');
 img {
   height: 80px;
-  padding-left: 25px;
-}
+  padding-left: 25px; }
 
 h1 {
-  padding: 20px;
-}
+  padding: 20px; }
+
+/*# sourceMappingURL=App.css.map */

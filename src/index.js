@@ -33,7 +33,7 @@ const muiTheme = getMuiTheme({
 
 const Main = props => (
   <MuiThemeProvider muiTheme={muiTheme}>
-    <AppBar title="Absentee Voting" />
+    <AppBar />
     <App {...props} />
   </MuiThemeProvider>
 );
