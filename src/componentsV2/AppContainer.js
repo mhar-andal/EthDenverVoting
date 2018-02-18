@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
@@ -16,11 +16,11 @@ class AppContainer extends React.Component {
   }
 
   getChildContext() {
-    console.log('AppContainer', this.props.elections);
+    console.log("AppContainer", this.props.elections);
     return {
       web3: this.props.web3,
       accounts: this.props.accounts,
-      elections: this.props.elections,
+      elections: this.props.elections
     };
   }
 
@@ -57,7 +57,7 @@ class AppContainer extends React.Component {
 AppContainer.childContextTypes = {
   web3: PropTypes.object,
   accounts: PropTypes.array,
-  elections: PropTypes.object,
+  elections: PropTypes.object
 };
 
 export default withRouter(AppContainer);
