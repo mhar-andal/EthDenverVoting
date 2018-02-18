@@ -4,7 +4,7 @@ contract('Elections', function(accounts) {
   function strToBytes32(str) {
     while(str.length < 32)
       str = str + " "
-    return str
+    return "0x" + str.split("").map(c => c.charCodeAt(0).toString(16)).join('')
   }
 
   function strToAddress(str) {
@@ -20,22 +20,26 @@ contract('Elections', function(accounts) {
     const c1name = "sally someone"
     let elections;
     return Elections.deployed()
-      .then(_elections => {
-        elections = _elections
-        return elections.createElection(e, {from: owner})
+      .then(_elections => elections = _elections)
+
+      // create the election
+      .then(() => elections.getNumElections()).then(n => assert.equal(n, 0, "No elections yet"))
+      .then(() => elections.createElection(e, {from: owner}))
+      .then(() => elections.getNumElections()).then(n => assert.equal(n, 1, "Election was created"))
+      .then(() => elections.getElection.call(0))
+      .then(([name, numCandidates]) => {
+        assert.equal(name, e, 'It tells you the id/name')
+        assert.equal(numCandidates, 0, 'New elections have candidates')
       })
-      .then(() => elections.getNumCandidates.call(e))
-      .then(num => assert.equal(num, 0, "No candidates yet"))
+
+      // add a candidate
+      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 0, "No candidates yet"))
       .then(() => elections.addCandidate(e, c1keyInt, c1name, {from: owner}))
-      .then(() => elections.getNumCandidates.call(e))
-      .then(num => {
-        assert.equal(num, 1, "One candidate")
-        return elections
-          .getCandidate.call(e, 0)
-          .then(([key, name]) => {
-            assert.equal(key, c1keyStr, 'keys should match')
-            assert.equal(name, c1name, 'names should match')
-          })
+      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 1, "Candidate was added"))
+      .then(() => elections.getCandidate.call(e, 0))
+      .then(([key, name]) => {
+        assert.equal(key, c1keyStr, 'keys should match')
+        assert.equal(name, c1name, 'names should match')
       })
 
     // return MetaCoin.deployed().then(instance =>
