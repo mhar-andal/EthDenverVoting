@@ -4,6 +4,7 @@ contract Elections {
   struct Candidate {
     address key;
     string name;
+    uint256 numVotes;
   }
 
   struct ElectionStruct {
@@ -28,7 +29,7 @@ contract Elections {
   }
 
   function addCandidate(bytes32 election, address key, string name) public {
-    Candidate memory candidate = Candidate(key, name);
+    Candidate memory candidate = Candidate(key, name, 0);
     elections[election].candidates.push(candidate);
   }
 
@@ -39,5 +40,13 @@ contract Elections {
   function getCandidate(bytes32 election, uint256 index) public view returns (address key, string name) {
     Candidate memory candidate = elections[election].candidates[index];
     return (candidate.key, candidate.name);
+  }
+
+  function getVotes(bytes32 election, uint256 candidateIndex) public view returns (uint256) {
+    return elections[election].candidates[candidateIndex].numVotes;
+  }
+
+  function vote(bytes32 election, uint256 candidateIndex) public {
+    elections[election].candidates[candidateIndex].numVotes++;
   }
 }

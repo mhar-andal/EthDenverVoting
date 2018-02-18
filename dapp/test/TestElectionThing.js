@@ -11,17 +11,28 @@ contract('Elections', function(accounts) {
     return "0x" + strToBytes32(str)
   }
 
-  const owner = accounts[0];
+  const owner  = accounts[0]
+  const voter1 = accounts[1]
+  const voter2 = accounts[2]
+  const voter3 = accounts[3]
 
   it("happy path", function() {
     const e = strToBytes32("my election")
+
+    // candidate 1
     const c1keyInt = 5 // strToAddress("c1key")
     const c1keyStr = "0x0000000000000000000000000000000000000005"
     const c1name = "Sally Someone"
+
+    // candidate 2
     const c2keyInt = 6 // strToAddress("c2key")
     const c2keyStr = "0x0000000000000000000000000000000000000006"
     const c2name   = "Percy Person"
+
+    // voter 1
+
     let elections;
+
     return Elections.deployed()
       .then(_elections => elections = _elections)
 
@@ -51,6 +62,15 @@ contract('Elections', function(accounts) {
         assert.equal(key, c2keyStr, "keys don't match")
         assert.equal(name, c2name, "names don't match")
       })
+
+      // fkn vote, y'all
+      .then(() => elections.getVotes(e, 0)).then((n) => assert.equal(n, 0, 'Should not be any votes yet!'))
+      .then(() => elections.getVotes(e, 1)).then((n) => assert.equal(n, 0, 'Should not be any votes yet!'))
+      .then(() => elections.vote(e, 0, {from: voter1}))
+      .then(() => elections.vote(e, 0, {from: voter2}))
+      .then(() => elections.vote(e, 1, {from: voter3}))
+      .then(() => elections.getVotes(e, 0)).then((n) => assert.equal(n, 2, 'Voters 1 and 2 voted for candidate 1'))
+      .then(() => elections.getVotes(e, 1)).then((n) => assert.equal(n, 1, 'Voter 3 voted for candidate 2'))
   })
 
   // it("should send coin correctly", function() {
