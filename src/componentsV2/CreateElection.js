@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { isEmpty } from "lodash";
 
 import TextField from "material-ui/TextField";
@@ -58,16 +59,19 @@ class CreateElection extends React.Component {
     });
   }
 
-  addCandidateFields = () => {
-    console.log("this.state", this.state);
-    const textField = createTextInput("Add Candidate", console.log);
-    this.setState({
-      textFields: [...this.state.textFields, textField]
-    });
-    console.log("this.state after", this.state);
-  };
+  handleSubmit = () => {
+    // const textField = createTextInput("Add Candidate", console.log);
+    // this.setState({
+    //   textFields: [...this.state.textFields, textField]
+    // });
+    const name = this.state.formFields.electionName
+    const candidateNames = [
+      this.state.formFields.candidateFieldNames.candidate1.name,
+      this.state.formFields.candidateFieldNames.candidate2.name,
+    ]
 
-  handleSubmit = () => {};
+    this.context.elections.createElection(name)
+  };
 
   handleCandidateName = (value, candidateId) => {
     this.setState({
@@ -98,14 +102,9 @@ class CreateElection extends React.Component {
     return (
       <div className="container">
         <h1>Welcome to the Election Creator.</h1>
-        {this.state.textFields.map((TextField, i) => <TextField key={i} />)}
-        {/* <span className="f-left">
-          <FlatButton
-            className="add-candidate"
-            label="Add Candidate"
-            onClick={this.addCandidateFields}
-          />
-        </span> */}
+        {this.state.textFields.map((TextField, i) =>
+          <TextField key={i}/>)
+        }
         <span className="f-left">
           <FlatButton
             labelStyle={{
@@ -114,12 +113,16 @@ class CreateElection extends React.Component {
             hoverColor="#b70b2a"
             backgroundColor="rgb(0, 40, 104)"
             label="Submit"
-            onClick={this.addCandidateFields}
+            onClick={this.handleSubmit}
           />
         </span>
       </div>
     );
   }
 }
+
+CreateElection.contextTypes = {
+  elections: PropTypes.object,
+};
 
 export default CreateElection;

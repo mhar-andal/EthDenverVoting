@@ -16,10 +16,11 @@ class AppContainer extends React.Component {
   }
 
   getChildContext() {
-    console.log("this.state", this.props);
+    console.log('AppContainer', this.props.elections);
     return {
       web3: this.props.web3,
-      accounts: this.props.accounts
+      accounts: this.props.accounts,
+      elections: this.props.elections,
     };
   }
 
@@ -55,7 +56,8 @@ class AppContainer extends React.Component {
 
 AppContainer.childContextTypes = {
   web3: PropTypes.object,
-  accounts: PropTypes.object
+  accounts: PropTypes.array,
+  elections: PropTypes.object,
 };
 
 export default withRouter(AppContainer);
