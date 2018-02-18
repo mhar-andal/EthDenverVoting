@@ -16,7 +16,6 @@ class AppContainer extends React.Component {
   }
 
   getChildContext() {
-    console.log("AppContainer", this.props.elections);
     return {
       web3: this.props.web3,
       accounts: this.props.accounts,

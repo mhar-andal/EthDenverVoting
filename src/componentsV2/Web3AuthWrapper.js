@@ -18,12 +18,9 @@ class Web3AuthWrapper extends React.Component {
     if (typeof window.web3 !== "undefined") {
       let web3 = new Web3(window.web3.currentProvider);
       const accounts = await Promise.promisify(web3.eth.getAccounts)();
-      console.log("accounts", accounts);
-      const network = "ganacheUI"; // FIXME: app knows this, but doesn't pass it in
+      const network = "development"; // FIXME: app knows this, but doesn't pass it in
       const { contracts } = await fetchContracts(network, ["Elections"]);
       const elections = new Elections(contracts.Elections, web3, accounts[0]);
-      console.log("web3", web3);
-      console.log("address", accounts);
       this.setState({
         authenticated: true,
         web3,

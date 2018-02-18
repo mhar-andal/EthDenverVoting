@@ -42,10 +42,6 @@ class Voting extends React.Component {
   };
 
   renderTableRow = (id, address, name, party) => {
-    console.log(
-      "this.state.currentlySelected === id - 1",
-      this.state.currentlySelected === id - 1
-    );
     return (
       <TableRow selected={this.state.currentlySelected === id - 1}>
         <TableRowColumn>{id}</TableRowColumn>
@@ -56,7 +52,6 @@ class Voting extends React.Component {
   };
 
   render() {
-    console.log("state", this.state.currentlySelected);
     return (
       <div className="container">
         <Table

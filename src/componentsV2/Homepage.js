@@ -29,7 +29,6 @@ class Homepage extends React.Component {
 
   render() {
     const { accounts } = this.props;
-    console.log("props", this.context);
     const firstAccount = !isEmpty(accounts) && accounts[0];
     return (
       <div className="container">

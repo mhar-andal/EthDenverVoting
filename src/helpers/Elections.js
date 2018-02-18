@@ -40,7 +40,6 @@ export default class Elections {
 
 
   _call(fnName, ...args) {
-    console.log('calling', fnName, args)
     return new Promise((resolve, reject) => {
       this.contract[fnName].call(
         ...args,
