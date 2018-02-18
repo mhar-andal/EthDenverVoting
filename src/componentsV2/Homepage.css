@@ -1,0 +1,14 @@
+.container {
+  font-size: 80px;
+  text-align: center;
+}
+
+.pad-1 {
+  padding-top: 52px;
+}
+
+.content-section {
+  background-color: #b70b2a;
+  width: 100%;
+  border-radius: 12px;
+}
