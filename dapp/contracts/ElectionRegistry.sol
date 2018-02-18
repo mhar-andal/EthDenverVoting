@@ -16,12 +16,13 @@ contract ElectionRegistry {
         _;
     }
 
-    function newElection(string _title) onlyRegistryOwner public {
+    function newElection(string _title) onlyRegistryOwner public returns(string) {
         address election = new Election(_title);
         if (election == 0x0) {
           revert();
         }
         getContract[_title] = election;
+        return (_title);
     }
 
     function getElectionContract(string _title) view public returns(address) {

@@ -16,6 +16,7 @@ import "./App.css";
 import ResultsTable from "./ResultsTable";
 import Navigation from "./Tabs";
 import TextField from "material-ui/TextField";
+import { isEmpty } from "lodash";
 
 class App extends React.Component {
   // setState: {
@@ -66,10 +67,15 @@ class App extends React.Component {
     });
   };
 
-  handleElectionSubmit = () => {
+  handleElectionSubmit = async () => {
+    console.log("RUNNING HERE");
     const { accounts, electionRegistry, electionName } = this.state;
+    const electionNameResponse = await electionRegistry.newElection(
+      electionName
+    );
+    console.log("RUNNING HERE 2");
     console.log("electionName", electionName);
-    return electionRegistry.newElection(electionName);
+    this.setState({ electionName: electionNameResponse });
   };
 
   voteHandler = name => async () => {
@@ -152,6 +158,11 @@ class App extends React.Component {
             />
           </div>
         )}
+        <div>
+          {!isEmpty(this.state.electionName) && (
+            <h1>{this.state.electionName}</h1>
+          )}
+        </div>
       </div>
     );
   }

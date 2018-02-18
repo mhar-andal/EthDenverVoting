@@ -13,19 +13,21 @@ export default class ElectionRegistry {
     );
 
     const newElection = Promise.promisify(
-      this.contract.newElection.call,
-      { context: this.contract.newElection }
+      this.contract.newElection.sendTransaction,
+      {
+        context: this.contract.newElection
+      }
     );
 
     const getTransaction = Promise.promisify(
       this.contract._eth.getTransaction,
-      { context: this.contract._eth },
+      { context: this.contract._eth }
     );
 
     this.methods = {
       getElectionContract,
       newElection,
-      getTransaction,
+      getTransaction
     };
   }
 
@@ -33,6 +35,7 @@ export default class ElectionRegistry {
     let elapsed = 0;
     let delay = 1000;
     while (elapsed < 10 * 60 * 1000) {
+      console.log("WAITING WAITING");
       let txObject = await this.methods.getTransaction(tx);
       if (txObject && txObject.blockNumber) {
         return txObject;
@@ -49,12 +52,19 @@ export default class ElectionRegistry {
     const electionContract = await this.methods.getElectionContract(title);
   }
 
-  async newElection(title, address) {
-    const tx = await this.methods.newElection("poop", {
-      from: this.web3.eth.accounts[0],
-      gas: 1000000,
-      gasPrice: 300,
-    });
-    await this.waitForBlock(tx)
+  async newElection(title) {
+    console.log("GETTING FUCKING HERE");
+    const tx = await this.methods
+      .newElection(title, {
+        from: this.web3.eth.accounts[0],
+        gas: 1000000,
+        gasPrice: 300
+      })
+      .then(thing => {
+        console.log("thing", thing);
+        return thing;
+      });
+    await this.waitForBlock(tx);
+    return tx;
   }
 }
