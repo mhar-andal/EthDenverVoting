@@ -22,14 +22,16 @@ class Voting extends React.Component {
     };
   }
 
-  async componentWillMount() {
-    const { electionName } = this.state;
-    // const election = "e1"; // FIXME, get from the path, probably
-    const numCandidates = await this.context.elections.getNumCandidates(
-      electionName
-    );
-    const candidateIndexes = [];
-    for (let i = 0; i < numCandidates; ++i) candidateIndexes.push(i);
+  componentWillMount() {
+    this.refreshCandidates()
+  }
+
+  refreshCandidates = async () => {
+    const { electionName } = this.state
+    const numCandidates = await this.context.elections.getNumCandidates(electionName)
+    const candidateIndexes = []
+    for(let i=0; i<numCandidates; ++i)
+      candidateIndexes.push(i)
     this.setState({
       candidates: await map(candidateIndexes, i =>
         this.context.elections.getCandidateByIndex(electionName, i)
@@ -37,19 +39,21 @@ class Voting extends React.Component {
     });
   }
 
-  handleSubmit = id => {
-    if (!id) {
-      return;
-    }
-    // vote
+  handleSubmit = proxySomething => {
+    const candidateIndex = this.state.currentlySelected
+    if (typeof candidateIndex !== 'number') return
+    const { electionName } = this.state
+    this.context.elections.vote(electionName, candidateIndex)
+      .then(() => this.refreshCandidates())
   };
 
-  renderTableRow = (id, address, name, party) => {
+  renderTableRow = (id, {address, name, numVotes}, party) => {
     return (
       <TableRow key={id} selected={this.state.currentlySelected === id - 1}>
         <TableRowColumn>{id}</TableRowColumn>
         <TableRowColumn>{name}</TableRowColumn>
         <TableRowColumn>{party}</TableRowColumn>
+        <TableRowColumn>{numVotes}</TableRowColumn>
       </TableRow>
     );
   };
@@ -69,14 +73,14 @@ class Voting extends React.Component {
               <TableHeaderColumn>ID</TableHeaderColumn>
               <TableHeaderColumn>Candidate Name</TableHeaderColumn>
               <TableHeaderColumn>Party</TableHeaderColumn>
+              <TableHeaderColumn>Number of Votes</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody deselectOnClickaway={false}>
             {this.state.candidates.map((candidate, index) => {
               return this.renderTableRow(
                 index + 1,
-                candidate.address,
-                candidate.name,
+                candidate,
                 index % 2 ? "Republican" : "Democrat"
               );
             })}

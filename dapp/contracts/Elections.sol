@@ -37,9 +37,9 @@ contract Elections {
     return elections[election].candidates.length;
   }
 
-  function getCandidate(bytes32 election, uint256 index) public view returns (address key, string name) {
+  function getCandidate(bytes32 election, uint256 index) public view returns (address key, string name, uint256 numVotes) {
     Candidate memory candidate = elections[election].candidates[index];
-    return (candidate.key, candidate.name);
+    return (candidate.key, candidate.name, candidate.numVotes);
   }
 
   function getVotes(bytes32 election, uint256 candidateIndex) public view returns (uint256) {

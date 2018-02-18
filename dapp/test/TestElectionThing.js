@@ -52,15 +52,15 @@ contract('Elections', function(accounts) {
       .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 1, "Candidate wasn't added"))
       .then(() => elections.addCandidate(e, c2keyInt, c2name, {from: owner}))
       .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 2, "Candidate wasn't added"))
-      .then(() => elections.getCandidate.call(e, 0))
-      .then(([key, name]) => {
+      .then(() => elections.getCandidate.call(e, 0)).then(([key, name, numVotes]) => {
         assert.equal(key, c1keyStr, "keys don't match")
         assert.equal(name, c1name, "names don't match")
+        assert.equal(numVotes, 0, "votes don't match")
       })
-      .then(() => elections.getCandidate.call(e, 1))
-      .then(([key, name]) => {
+      .then(() => elections.getCandidate.call(e, 1)).then(([key, name, numVotes]) => {
         assert.equal(key, c2keyStr, "keys don't match")
         assert.equal(name, c2name, "names don't match")
+        assert.equal(numVotes, 0, "votes don't match")
       })
 
       // fkn vote, y'all
@@ -71,6 +71,11 @@ contract('Elections', function(accounts) {
       .then(() => elections.vote(e, 1, {from: voter3}))
       .then(() => elections.getVotes(e, 0)).then((n) => assert.equal(n, 2, 'Voters 1 and 2 voted for candidate 1'))
       .then(() => elections.getVotes(e, 1)).then((n) => assert.equal(n, 1, 'Voter 3 voted for candidate 2'))
+      .then(() => elections.getCandidate.call(e, 0)).then(([key, name, numVotes]) => {
+        assert.equal(key, c1keyStr, "keys don't match")
+        assert.equal(name, c1name, "names don't match")
+        assert.equal(numVotes, 2, "votes don't match")
+      })
   })
 
   // it("should send coin correctly", function() {
