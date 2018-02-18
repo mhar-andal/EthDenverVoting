@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, withRouter } from "react-router-dom";
 
+import PropTypes from "prop-types";
+
 import AppBar from "material-ui/AppBar";
 import RaisedButton from "material-ui/RaisedButton";
 
@@ -13,21 +15,15 @@ class AppContainer extends React.Component {
     };
   }
 
-  renderChildren = () => {
-    return React.Children.map(this.props.children, child => {
-      if (child.type === React.Child) {
-        return React.cloneElement(child, {
-          ...this.state,
-          ...this.props
-        });
-      } else {
-        return child;
-      }
-    });
-  };
+  getChildContext() {
+    console.log("this.state", this.props);
+    return {
+      web3: this.props.web3,
+      accounts: this.props.accounts
+    };
+  }
 
   render() {
-    console.log("props", this.props);
     return (
       <div>
         <AppBar
@@ -51,10 +47,15 @@ class AppContainer extends React.Component {
             />
           </div>
         </AppBar>
-        {this.renderChildren()}
+        {this.props.children}
       </div>
     );
   }
 }
+
+AppContainer.childContextTypes = {
+  web3: PropTypes.object,
+  accounts: PropTypes.object
+};
 
 export default withRouter(AppContainer);
