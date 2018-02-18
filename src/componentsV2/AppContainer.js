@@ -42,7 +42,7 @@ class AppContainer extends React.Component {
               label="New Election"
               style={{ marginTop: 6 }}
               onClick={() => {
-                this.props.history.push("/election/create");
+                this.props.history.push("/elections/create");
               }}
             />
           </div>

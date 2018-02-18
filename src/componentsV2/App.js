@@ -15,7 +15,7 @@ const App = props => {
       <Switch>
         <Web3AuthWrapper>
           <Route exact path="/" component={Homepage} />
-          <Route path="/election/create" component={CreateElection} />
+          <Route path="/elections/create" component={CreateElection} />
           <Route path="/elections/:electionName/vote" component={Voting} />
           <Route path="/login" component={LoginPage} />
           <Route path="/vote" component={Voting} />
