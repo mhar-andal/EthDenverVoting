@@ -19,9 +19,35 @@ export default class Elections {
   createElection(electionName) {
     return this._sendTransaction('createElection', electionName)
   }
+  getNumElections() {
+    throw "Not implemented"
+  }
+  getElectionByIndex(index) {
+    throw "Not implemented"
+  }
+
 
   addCandidate(electionName, key, name) {
     return this._sendTransaction('addCandidate', electionName, key, name)
+  }
+  getNumCandidates(election) {
+    return this._call('getNumCandidates', election)
+  }
+  getCandidateByIndex(election, index) {
+    return this._call('getCandidate', election, index)
+      .then(([address, name]) => ({address, name}))
+  }
+
+
+  _call(fnName, ...args) {
+    console.log('calling', fnName, args)
+    return new Promise((resolve, reject) => {
+      this.contract[fnName].call(
+        ...args,
+        { from: this.account },
+        (err, result) => err ? reject(err) : resolve(result)
+      )
+    })
   }
 
   _sendTransaction(fnName, ...args) {
@@ -37,7 +63,6 @@ export default class Elections {
       )
     })
   }
-
 
   async _waitForBlock(tx) {
     const getTransaction = Promise.promisify(

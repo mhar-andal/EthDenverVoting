@@ -9,15 +9,29 @@ import {
   TableRowColumn
 } from "material-ui/Table";
 import FlatButton from "material-ui/FlatButton";
+import PropTypes from 'prop-types';
+import { map } from 'bluebird'
 
 class Voting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      web3: props.web3,
-      candidates: ["Mhar Andal", "Josh Cheek"],
+      candidates: [],
       currentlySelected: null
     };
+  }
+
+  async componentWillMount() {
+    const election = 'e1' // FIXME, get from the path, probably
+    const numCandidates = await this.context.elections.getNumCandidates(election)
+    const candidateIndexes = []
+    for(let i=0; i<numCandidates; ++i)
+      candidateIndexes.push(i)
+    this.setState({
+      candidates: await map(candidateIndexes, i =>
+        this.context.elections.getCandidateByIndex(election, i)
+      )
+    })
   }
 
   handleSubmit = id => {
@@ -27,7 +41,7 @@ class Voting extends React.Component {
     // vote
   };
 
-  renderTableRow = (id, name, party) => {
+  renderTableRow = (id, address, name, party) => {
     console.log(
       "this.state.currentlySelected === id - 1",
       this.state.currentlySelected === id - 1
@@ -47,11 +61,7 @@ class Voting extends React.Component {
       <div className="container">
         <Table
           onCellClick={thing => {
-            console.log("thing", thing);
-            if (thing === 0 || thing === 1)
-              this.setState({
-                currentlySelected: thing
-              });
+            this.setState({currentlySelected: thing});
           }}
           selectable={true}
         >
@@ -66,8 +76,9 @@ class Voting extends React.Component {
             {this.state.candidates.map((candidate, index) => {
               return this.renderTableRow(
                 index + 1,
-                candidate,
-                index === 0 ? "Republican" : "Democrat"
+                candidate.address,
+                candidate.name,
+                index % 2 ? "Republican" : "Democrat"
               );
             })}
           </TableBody>
@@ -86,5 +97,9 @@ class Voting extends React.Component {
     );
   }
 }
+
+Voting.contextTypes = {
+  elections: PropTypes.object,
+};
 
 export default Voting;
