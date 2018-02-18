@@ -7,18 +7,37 @@ contract('Elections', function(accounts) {
     return str
   }
 
+  function strToAddress(str) {
+    return "0x" + strToBytes32(str)
+  }
+
   const owner = accounts[0];
 
   it("happy path", function() {
     const e = strToBytes32("my election")
+    const c1keyInt = 5 // strToAddress("c1key")
+    const c1keyStr = "0x0000000000000000000000000000000000000005"
+    const c1name = "sally someone"
     let elections;
     return Elections.deployed()
       .then(_elections => {
         elections = _elections
         return elections.createElection(e, {from: owner})
       })
-      .then(() => elections.getCandidates.call(e))
-      .then(candidates => assert.equal(candidates.length, 0, "No candidates yet"))
+      .then(() => elections.getNumCandidates.call(e))
+      .then(num => assert.equal(num, 0, "No candidates yet"))
+      .then(() => elections.addCandidate(e, c1keyInt, c1name, {from: owner}))
+      .then(() => elections.getNumCandidates.call(e))
+      .then(num => {
+        assert.equal(num, 1, "One candidate")
+        return elections
+          .getCandidate.call(e, 0)
+          .then(([key, name]) => {
+            assert.equal(key, c1keyStr, 'keys should match')
+            assert.equal(name, c1name, 'names should match')
+          })
+      })
+
     // return MetaCoin.deployed().then(instance =>
     //   instance.getBalance.call(accounts[0])
     // ).then(balance =>
