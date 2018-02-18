@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
@@ -25,7 +25,7 @@ class CreateElection extends React.Component {
         electionName: "",
         candidateFieldNames: {
           candidate1: { name: "" },
-          candidate2: { name: "" },
+          candidate2: { name: "" }
         }
       },
       web3: props.web3,
@@ -54,19 +54,19 @@ class CreateElection extends React.Component {
   }
 
   handleSubmit = async () => {
-    const election = this.state.formFields.electionName
-    await this.context.elections.createElection(election)
+    const election = this.state.formFields.electionName;
+    await this.context.elections.createElection(election);
     await this.context.elections.addCandidate(
       election,
       1, // FIXME
       this.state.formFields.candidateFieldNames.candidate1.name
-    )
+    );
     await this.context.elections.addCandidate(
       election,
       2, // FIXME
       this.state.formFields.candidateFieldNames.candidate2.name
-    )
-    this.props.history.push('/')
+    );
+    this.props.history.push(`/elections/${election}/vote`);
   };
 
   handleCandidateName = (value, candidateId) => {
@@ -95,9 +95,7 @@ class CreateElection extends React.Component {
     return (
       <div className="container">
         <h1>Welcome to the Election Creator.</h1>
-        {this.state.textFields.map((TextField, i) =>
-          <TextField key={i}/>)
-        }
+        {this.state.textFields.map((TextField, i) => <TextField key={i} />)}
         <span className="f-left">
           <FlatButton
             labelStyle={{
@@ -115,7 +113,7 @@ class CreateElection extends React.Component {
 }
 
 CreateElection.contextTypes = {
-  elections: PropTypes.object,
+  elections: PropTypes.object
 };
 
 export default CreateElection;
