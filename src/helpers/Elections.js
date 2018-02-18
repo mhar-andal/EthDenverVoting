@@ -17,15 +17,22 @@ export default class Elections {
   }
 
   createElection(electionName) {
+    return this.sendTransaction('createElection', electionName)
+  }
+
+  addCandidate(electionName, key, name) {
+    return this.sendTransaction('addCandidate', electionName, key, name)
+  }
+
+  sendTransaction(fnName, ...args) {
     return new Promise((resolve, reject) => {
-      this.contract.createElection.sendTransaction(
-        electionName,
+      this.contract[fnName].sendTransaction(
+        ...args,
         { from: this.account,
           gas: 1000000,
           gasPrice: 300
         },
         (err, transaction) => {
-          console.log('createElection', err, transaction)
           if (err)
             reject(err)
           else
@@ -35,26 +42,6 @@ export default class Elections {
     })
   }
 
-  addCandidate(electionName, key, name) {
-    return new Promise((resolve, reject) => {
-      this.contract.addCandidate.sendTransaction(
-        electionName,
-        key,
-        name,
-        { from: this.account,
-          gas: 1000000,
-          gasPrice: 300
-        },
-        (err, transaction) => {
-          console.log('createElection', err, transaction)
-          if (err)
-            reject(err)
-          else
-            this.waitForBlock(transaction).then(resolve)
-        }
-      )
-    })
-  }
 
   async waitForBlock(tx) {
     console.log(this.contract)
