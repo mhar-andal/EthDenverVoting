@@ -21,9 +21,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: "rgb(0, 40, 104)",
-    canvasColor: darkBlack,
-    textColor: darkBlack
+    primary1Color: "rgb(0, 40, 104)"
   },
   appBar: {
     height: 50
