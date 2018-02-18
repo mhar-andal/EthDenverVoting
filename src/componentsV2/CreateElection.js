@@ -72,6 +72,7 @@ class CreateElection extends React.Component {
       2, // FIXME
       this.state.formFields.candidateFieldNames.candidate1.name
     )
+    this.props.history.push('/')
   };
 
   handleCandidateName = (value, candidateId) => {
