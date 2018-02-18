@@ -98,9 +98,9 @@ class CreateElection extends React.Component {
     return (
       <div className="container">
         <h1>Welcome to the Election Creator.</h1>
-        {this.state.textFields.map(TextField => {
-          return <TextField />;
-        })}
+        {this.state.textFields.map((TextField, i) =>
+          <TextField key={i}/>)
+        }
         {/* <span className="f-left">
           <FlatButton
             className="add-candidate"
