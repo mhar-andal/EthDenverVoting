@@ -43,12 +43,15 @@ export default class ElectionRegistry {
   }
 
   async fetchElectionContract(title) {
+    console.log("hi")
     while(title.length < 32)
       title = title + " "
     return await new Promise((resolve, reject) => {
+      this.contract.getElectionContract.call(
       asciiToHex(title),
         { from: this.web3.eth.accounts[0] },
-        (err, result) => resolve(result)
+        (err, result) => {console.log(err, result); resolve(result)}
+      )
     })
   }
 
@@ -64,7 +67,7 @@ export default class ElectionRegistry {
           gas: 1000000,
           gasPrice: 300
         },
-        (err, result) => resolve(hexToAscii(result))
+        (err, result) => {this.fetchElectionContract(title), resolve(hexToAscii(result))}
       )
     })
   }

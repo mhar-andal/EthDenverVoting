@@ -33,7 +33,8 @@ class App extends React.Component {
       poll: null,
       accounts: null,
       creatingNewElection: false,
-      electionName: ""
+      electionName: "",
+      voterKey: ""
     };
   }
 
@@ -86,6 +87,16 @@ class App extends React.Component {
     this.setState({ votes, votePending: false });
   };
 
+  handleVoterAdd = async () => {
+    const { accounts, electionRegistry, voterKey } = this.state;
+    console.log("electionName", this.state.electionName);
+    const voterAddResponse = await electionRegistry.addVoter(
+      this.state.voterKey
+    );
+    console.log("voterKeyResponse:", this.state.voterAddResponse);
+    this.setState({ voterKey: voterAddResponse });
+  }
+
   render() {
     const { creatingNewElection } = this.state;
     return (
@@ -97,7 +108,8 @@ class App extends React.Component {
               style={{ marginTop: 6 }}
               onClick={() => {
                 this.setState({
-                  creatingNewElection: true
+                  creatingNewElection: true,
+                  newElectionFill: true
                 });
               }}
             />
@@ -153,13 +165,22 @@ class App extends React.Component {
               backgroundColor="#bf0a30"
               onClick={this.handleElectionSubmit}
             />
-          </div>
+          </div>  
         )}
         <div>
           {!isEmpty(this.state.electionName) && (
             <h1>{this.state.electionName}</h1>
           )}
         </div>
+        <div style={{ textAlign: "center", borderColor: "#bf0a30" }}>
+          <TextField
+            floatingLabelFixed={true}
+            floatingLabelText="Voter Public Key"
+            fullWidth={true}
+            onChange={obj => this.handleVoterAdd(obj.target.value)}
+            style={{ fontSize: 30, marginTop: 14 }}
+            />
+        </div>  
       </div>
     );
   }

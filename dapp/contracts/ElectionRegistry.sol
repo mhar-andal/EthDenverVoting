@@ -8,7 +8,7 @@ contract ElectionRegistry {
     mapping(address => bool) public isRegistered;
 
     address[] electionList;
-    mapping(uint => address) public getContract;
+    mapping(bytes32 => address) public getContract;
 
     function ElectionRegistry() public {
       registryOwner = msg.sender;
@@ -26,13 +26,14 @@ contract ElectionRegistry {
         if (election == 0x0) {
             revert();
         }
-        uint id = electionList.push(election) - 1;
-        getContract[id] = election;
+        electionList.push(election);
+        getContract[_title] = election;
         return _title;
     }
 
-    function getElectionContract(uint id) view public returns(address) {
-        return getContract[id];
+    function getElectionContract(bytes32 _title) view public returns(address) {
+        //return getContract[_title];
+        return this.getContract(0);
     }
 
     function addVoter(address _voterAddress) onlyRegistryOwner public {
