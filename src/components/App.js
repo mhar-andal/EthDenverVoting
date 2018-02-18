@@ -68,13 +68,12 @@ class App extends React.Component {
   };
 
   handleElectionSubmit = async () => {
-    console.log("RUNNING HERE");
     const { accounts, electionRegistry, electionName } = this.state;
+    console.log("electionName", this.state.electionName);
     const electionNameResponse = await electionRegistry.newElection(
-      electionName
+      this.state.electionName
     );
-    console.log("RUNNING HERE 2");
-    console.log("electionName", electionName);
+    console.log("electionNameResponse:", this.state.electionNameResponse);
     this.setState({ electionName: electionNameResponse });
   };
 
@@ -144,9 +143,7 @@ class App extends React.Component {
               floatingLabelFixed={true}
               floatingLabelText="Election Name"
               fullWidth={true}
-              onChange={e => {
-                this.setState({});
-              }}
+              onChange={obj => this.handleElectionNameChange(obj.target.value)}
               style={{ fontSize: 30, marginTop: 14 }}
             />
             <RaisedButton

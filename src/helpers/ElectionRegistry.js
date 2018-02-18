@@ -2,6 +2,14 @@ import Promise from "bluebird";
 import Web3 from "web3";
 import { promisify } from "util";
 
+const { asciiToHex, hexToAscii } =
+  // web3 1.X
+  Web3.utils || {
+    // web3 0.20.X
+    asciiToHex: Web3.prototype.fromAscii,
+    hexToAscii: Web3.prototype.toAscii,
+  };
+
 export default class ElectionRegistry {
   constructor(contract, web3) {
     this.contract = contract;
@@ -12,13 +20,6 @@ export default class ElectionRegistry {
       { context: this.contract.getElectionContract }
     );
 
-    const newElection = Promise.promisify(
-      this.contract.newElection.sendTransaction,
-      {
-        context: this.contract.newElection
-      }
-    );
-
     const getTransaction = Promise.promisify(
       this.contract._eth.getTransaction,
       { context: this.contract._eth }
@@ -26,7 +27,6 @@ export default class ElectionRegistry {
 
     this.methods = {
       getElectionContract,
-      newElection,
       getTransaction
     };
   }
@@ -53,18 +53,19 @@ export default class ElectionRegistry {
   }
 
   async newElection(title) {
-    console.log("GETTING FUCKING HERE");
-    const tx = await this.methods
-      .newElection(title, {
-        from: this.web3.eth.accounts[0],
-        gas: 1000000,
-        gasPrice: 300
-      })
-      .then(thing => {
-        console.log("thing", thing);
-        return thing;
-      });
-    await this.waitForBlock(tx);
-    return tx;
+    while(title.length < 32)
+      title = title + " "
+
+    // if you use Promise.promisify, it will return err instead of result >.<
+    return new Promise((resolve, reject) => {
+      this.contract.newElection.call(
+        asciiToHex(title),
+        { from: this.web3.eth.accounts[0],
+          gas: 1000000,
+          gasPrice: 300
+        },
+        (err, result) => resolve(hexToAscii(result))
+      )
+    })
   }
 }
