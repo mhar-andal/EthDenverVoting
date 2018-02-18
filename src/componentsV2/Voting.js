@@ -41,12 +41,13 @@ class Voting extends React.Component {
     // vote
   };
 
-  renderTableRow = (id, address, name, party) => {
+  renderTableRow = (id, {address, name, numVotes}, party) => {
     return (
       <TableRow key={id} selected={this.state.currentlySelected === id - 1}>
         <TableRowColumn>{id}</TableRowColumn>
         <TableRowColumn>{name}</TableRowColumn>
         <TableRowColumn>{party}</TableRowColumn>
+        <TableRowColumn>{numVotes}</TableRowColumn>
       </TableRow>
     );
   };
@@ -65,14 +66,14 @@ class Voting extends React.Component {
               <TableHeaderColumn>ID</TableHeaderColumn>
               <TableHeaderColumn>Candidate Name</TableHeaderColumn>
               <TableHeaderColumn>Party</TableHeaderColumn>
+              <TableHeaderColumn>Number of Votes</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody deselectOnClickaway={false}>
             {this.state.candidates.map((candidate, index) => {
               return this.renderTableRow(
                 index + 1,
-                candidate.address,
-                candidate.name,
+                candidate,
                 index % 2 ? "Republican" : "Democrat"
               );
             })}

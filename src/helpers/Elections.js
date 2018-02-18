@@ -26,7 +26,9 @@ export default class Elections {
   }
   getCandidateByIndex(election, index) {
     return this._call('getCandidate', election, index)
-      .then(([address, name]) => ({address, name}))
+      .then(([address, name, numVotes]) => ({
+        address, name, numVotes: numVotes.toNumber()
+      }))
   }
 
 
