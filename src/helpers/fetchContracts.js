@@ -10,7 +10,7 @@ const fetchContracts = async (network, contractNames) => {
   let localWeb3 = null;
   await Promise.map(contractNames, async name => {
     const contractInfo = await (await fetch(
-      `contract-info/${name}.json`
+      `/contract-info/${name}.json`
     )).json();
     if (!localWeb3) {
       const { networkLocation } = contractInfo[network];
