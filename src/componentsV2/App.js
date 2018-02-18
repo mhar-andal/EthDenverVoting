@@ -13,13 +13,13 @@ import Web3AuthWrapper from "./Web3AuthWrapper";
 const App = props => {
   return (
     <BrowserRouter>
-      <Web3AuthWrapper>
-        <Switch>
+      <Switch>
+        <Web3AuthWrapper>
           <Route exact path="/" component={Homepage} />
           <Route path="/election/create" component={CreateElection} />
           <Route path="/login" component={LoginPage} />
-        </Switch>
-      </Web3AuthWrapper>
+        </Web3AuthWrapper>
+      </Switch>
     </BrowserRouter>
   );
 };

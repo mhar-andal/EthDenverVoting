@@ -1,6 +1,8 @@
 import React from "react";
 import { isEmpty } from "lodash";
 
+import PropTypes from "prop-types";
+
 import "./Homepage.css";
 
 class Homepage extends React.Component {
@@ -27,12 +29,12 @@ class Homepage extends React.Component {
 
   render() {
     const { accounts } = this.props;
-
+    console.log("props", this.context);
+    const firstAccount = !isEmpty(accounts) && accounts[0];
     return (
       <div className="container">
         <div className="pad-1">{this.renderFlag()}</div>
-        <h1>Welcome {!isEmpty(accounts) && accounts[0]}!</h1>
-        <h2>Absentee Voting</h2>
+        <h1>Welcome {}!</h1>
         <div className="content-section">
           Vote with this secure, blockchain-powered voting system.
         </div>
@@ -40,5 +42,10 @@ class Homepage extends React.Component {
     );
   }
 }
+
+Homepage.contextTypes = {
+  web3: PropTypes.object,
+  accounts: PropTypes.object
+};
 
 export default Homepage;
