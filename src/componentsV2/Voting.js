@@ -43,7 +43,7 @@ class Voting extends React.Component {
 
   renderTableRow = (id, address, name, party) => {
     return (
-      <TableRow selected={this.state.currentlySelected === id - 1}>
+      <TableRow key={id} selected={this.state.currentlySelected === id - 1}>
         <TableRowColumn>{id}</TableRowColumn>
         <TableRowColumn>{name}</TableRowColumn>
         <TableRowColumn>{party}</TableRowColumn>
