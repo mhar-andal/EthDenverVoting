@@ -21,13 +21,13 @@ contract ElectionRegistry {
         _;
     }
 
-    function newElection(bytes32 _title) onlyRegistryOwner public returns(string){
-        address nElection = new Election(_title);
-        if (nElection == 0x0) {
+    function newElection(bytes32 _title) onlyRegistryOwner public returns(bytes32) {
+        address election = new Election(_title);
+        if (election == 0x0) {
             revert();
         }
-        uint id = (electionList.push(nElection) - 1);
-        getContract[id] = nElection;
+        uint id = (electionList.push(election) - 1);
+        getContract[id] = election;
         return _title;
     }
 
