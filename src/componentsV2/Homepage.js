@@ -43,7 +43,7 @@ class Homepage extends React.Component {
   }
 }
 
-Homepage.contextTypes = {
+Homepage.childContextTypes = {
   web3: PropTypes.object,
   accounts: PropTypes.array
 };

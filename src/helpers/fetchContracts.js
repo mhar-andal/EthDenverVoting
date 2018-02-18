@@ -13,6 +13,7 @@ const fetchContracts = async (network, contractNames) => {
       `/contract-info/${name}.json`
     )).json();
     if (!localWeb3) {
+      console.log("network", network);
       const { networkLocation } = contractInfo[network];
       localWeb3 = await getWeb3(networkLocation);
     }

@@ -9,6 +9,7 @@ import CreateElection from "./CreateElection";
 import Homepage from "./Homepage";
 import LoginPage from "./LoginPage";
 import Web3AuthWrapper from "./Web3AuthWrapper";
+import Voting from "./Voting";
 
 const App = props => {
   return (
@@ -18,6 +19,7 @@ const App = props => {
           <Route exact path="/" component={Homepage} />
           <Route path="/election/create" component={CreateElection} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/vote" component={Voting} />
         </Web3AuthWrapper>
       </Switch>
     </BrowserRouter>
