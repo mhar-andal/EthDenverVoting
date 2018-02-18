@@ -45,7 +45,7 @@ class Homepage extends React.Component {
 
 Homepage.contextTypes = {
   web3: PropTypes.object,
-  accounts: PropTypes.object
+  accounts: PropTypes.array
 };
 
 export default Homepage;
