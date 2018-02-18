@@ -17,7 +17,10 @@ contract('Elections', function(accounts) {
     const e = strToBytes32("my election")
     const c1keyInt = 5 // strToAddress("c1key")
     const c1keyStr = "0x0000000000000000000000000000000000000005"
-    const c1name = "sally someone"
+    const c1name = "Sally Someone"
+    const c2keyInt = 6 // strToAddress("c2key")
+    const c2keyStr = "0x0000000000000000000000000000000000000006"
+    const c2name   = "Percy Person"
     let elections;
     return Elections.deployed()
       .then(_elections => elections = _elections)
@@ -32,14 +35,21 @@ contract('Elections', function(accounts) {
         assert.equal(numCandidates, 0, "Where did this candidate come from?!")
       })
 
-      // add a candidate
+      // add candidates
       .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 0, "Where did this candidate come from?!"))
       .then(() => elections.addCandidate(e, c1keyInt, c1name, {from: owner}))
       .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 1, "Candidate wasn't added"))
+      .then(() => elections.addCandidate(e, c2keyInt, c2name, {from: owner}))
+      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 2, "Candidate wasn't added"))
       .then(() => elections.getCandidate.call(e, 0))
       .then(([key, name]) => {
         assert.equal(key, c1keyStr, "keys don't match")
         assert.equal(name, c1name, "names don't match")
+      })
+      .then(() => elections.getCandidate.call(e, 1))
+      .then(([key, name]) => {
+        assert.equal(key, c2keyStr, "keys don't match")
+        assert.equal(name, c2name, "names don't match")
       })
   })
 
