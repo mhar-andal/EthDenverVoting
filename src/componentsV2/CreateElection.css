@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.container h1 {
+  margin-top: 1em;
+}
+
 .submit {
   background-color: #b70b2a;
 }

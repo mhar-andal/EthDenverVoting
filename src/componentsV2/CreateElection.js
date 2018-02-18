@@ -98,9 +98,7 @@ class CreateElection extends React.Component {
         {this.state.textFields.map((TextField, i) => <TextField key={i} />)}
         <span className="f-left">
           <FlatButton
-            labelStyle={{
-              color: "white"
-            }}
+            className="submit-button"
             hoverColor="#b70b2a"
             backgroundColor="rgb(0, 40, 104)"
             label="Submit"

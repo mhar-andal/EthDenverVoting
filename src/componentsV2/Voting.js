@@ -87,9 +87,7 @@ class Voting extends React.Component {
           </TableBody>
         </Table>
         <FlatButton
-          labelStyle={{
-            color: "white"
-          }}
+          className="submit-button"
           hoverColor="#b70b2a"
           backgroundColor="rgb(0, 40, 104)"
           label="Vote!"

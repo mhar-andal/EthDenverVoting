@@ -2,3 +2,11 @@
   color: white;
   text-decoration: none;
 }
+
+.submit-button span {
+  position: absolute !important; /* materialize -.- */
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  color: white;
+}
