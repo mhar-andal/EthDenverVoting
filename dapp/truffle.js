@@ -12,7 +12,6 @@ module.exports = {
       host: "127.0.0.1",
       port: 8545,
       network_id: "*",
-      from: "0xaa26d0428985d9a865441a19da1ebe7ab4049db6"
     },
     // truffle develop
     develop: {
