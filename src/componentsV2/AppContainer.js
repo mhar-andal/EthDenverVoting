@@ -27,6 +27,7 @@ class AppContainer extends React.Component {
     return (
       <div>
         <AppBar
+          showMenuIconButton={false}
           title={
             <a
               onClick={() => {
