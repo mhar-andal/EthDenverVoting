@@ -23,30 +23,24 @@ contract('Elections', function(accounts) {
       .then(_elections => elections = _elections)
 
       // create the election
-      .then(() => elections.getNumElections()).then(n => assert.equal(n, 0, "No elections yet"))
+      .then(() => elections.getNumElections()).then(n => assert.equal(n, 0, "Shouldn't have elections!"))
       .then(() => elections.createElection(e, {from: owner}))
-      .then(() => elections.getNumElections()).then(n => assert.equal(n, 1, "Election was created"))
+      .then(() => elections.getNumElections()).then(n => assert.equal(n, 1, "Election wasn't created"))
       .then(() => elections.getElection.call(0))
       .then(([name, numCandidates]) => {
-        assert.equal(name, e, 'It tells you the id/name')
-        assert.equal(numCandidates, 0, 'New elections have candidates')
+        assert.equal(name, e, "Names don't match!")
+        assert.equal(numCandidates, 0, "Where did this candidate come from?!")
       })
 
       // add a candidate
-      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 0, "No candidates yet"))
+      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 0, "Where did this candidate come from?!"))
       .then(() => elections.addCandidate(e, c1keyInt, c1name, {from: owner}))
-      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 1, "Candidate was added"))
+      .then(() => elections.getNumCandidates.call(e)).then(n => assert.equal(n, 1, "Candidate wasn't added"))
       .then(() => elections.getCandidate.call(e, 0))
       .then(([key, name]) => {
-        assert.equal(key, c1keyStr, 'keys should match')
-        assert.equal(name, c1name, 'names should match')
+        assert.equal(key, c1keyStr, "keys don't match")
+        assert.equal(name, c1name, "names don't match")
       })
-
-    // return MetaCoin.deployed().then(instance =>
-    //   instance.getBalance.call(accounts[0])
-    // ).then(balance =>
-    //   assert.equal(balance.valueOf(), 10000, "10000 wasn't in the first account");
-    // )
   })
 
   // it("should send coin correctly", function() {
