@@ -22,6 +22,7 @@ class CreateElection extends React.Component {
     super(props);
     this.state = {
       formFields: {
+        disableButton: false,
         electionName: "",
         candidateFieldNames: {
           candidate1: { name: "" },
@@ -54,6 +55,9 @@ class CreateElection extends React.Component {
   }
 
   handleSubmit = async () => {
+    this.setState({
+      disableButton: true
+    });
     const election = this.state.formFields.electionName;
     await this.context.elections.createElection(election);
     await this.context.elections.addCandidate(
@@ -98,6 +102,7 @@ class CreateElection extends React.Component {
         {this.state.textFields.map((TextField, i) => <TextField key={i} />)}
         <span className="f-left">
           <FlatButton
+            disabled={this.state.disableButton}
             className="submit-button"
             hoverColor="#b70b2a"
             backgroundColor="rgb(0, 40, 104)"
