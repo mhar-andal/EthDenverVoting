@@ -2,7 +2,7 @@
 //
 // import React from 'react';
 
-import App from "./components/App";
+import App from "./componentsV2/App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import {

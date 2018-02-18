@@ -43,7 +43,7 @@ class App extends React.Component {
       "Voting",
       "ElectionRegistry"
     ]);
-    window.web3 = web3;
+    // window.web3 = web3;
     const web3client = new Web3Client(web3);
     window.contracts = contracts;
     const poll = new Voting(contracts.Voting);
@@ -95,7 +95,7 @@ class App extends React.Component {
     );
     console.log("voterKeyResponse:", this.state.voterAddResponse);
     this.setState({ voterKey: voterAddResponse });
-  }
+  };
 
   render() {
     const { creatingNewElection } = this.state;
@@ -165,7 +165,7 @@ class App extends React.Component {
               backgroundColor="#bf0a30"
               onClick={this.handleElectionSubmit}
             />
-          </div>  
+          </div>
         )}
         <div>
           {!isEmpty(this.state.electionName) && (
@@ -179,8 +179,8 @@ class App extends React.Component {
             fullWidth={true}
             onChange={obj => this.handleVoterAdd(obj.target.value)}
             style={{ fontSize: 30, marginTop: 14 }}
-            />
-        </div>  
+          />
+        </div>
       </div>
     );
   }
