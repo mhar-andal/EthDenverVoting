@@ -1,13 +1,4 @@
 import Promise from "bluebird";
-import Web3 from "web3";
-
-const { asciiToHex, hexToAscii } =
-  // web3 1.X
-  Web3.utils || {
-    // web3 0.20.X
-    asciiToHex: Web3.prototype.fromAscii,
-    hexToAscii: Web3.prototype.toAscii,
-  };
 
 export default class Elections {
   constructor(contract, web3, account) {
@@ -20,10 +11,10 @@ export default class Elections {
     return this._sendTransaction('createElection', electionName)
   }
   getNumElections() {
-    throw "Not implemented"
+    throw new Error("Not implemented");
   }
   getElectionByIndex(index) {
-    throw "Not implemented"
+    throw new Error("Not implemented");
   }
 
 

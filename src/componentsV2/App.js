@@ -1,8 +1,6 @@
 import React from "react";
-import Web3 from "web3";
-import Promise from "bluebird";
 
-import { BrowserRouter, Switch, withRouter } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { Route } from "react-router";
 
 import CreateElection from "./CreateElection";

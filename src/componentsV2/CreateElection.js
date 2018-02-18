@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { isEmpty } from "lodash";
 
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
@@ -25,16 +24,11 @@ class CreateElection extends React.Component {
       formFields: {
         electionName: "",
         candidateFieldNames: {
-          candidate1: {
-            name: ""
-          },
-          candidate2: {
-            name: ""
-          }
+          candidate1: { name: "" },
+          candidate2: { name: "" },
         }
       },
       web3: props.web3,
-      accounts: props.accounts,
       textFields: []
     };
   }

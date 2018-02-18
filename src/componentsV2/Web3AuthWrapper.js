@@ -4,8 +4,6 @@ import Web3 from "web3";
 import fetchContracts from "../helpers/fetchContracts";
 import Elections from "../helpers/Elections";
 
-import PropTypes from "prop-types";
-
 import AppContainer from "./AppContainer";
 
 class Web3AuthWrapper extends React.Component {

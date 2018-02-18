@@ -6,13 +6,6 @@ import PropTypes from "prop-types";
 import "./Homepage.css";
 
 class Homepage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      web3: props.web3
-    };
-  }
-
   renderFlag = () => {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" width="540" height="300">
@@ -28,8 +21,6 @@ class Homepage extends React.Component {
   };
 
   render() {
-    const { accounts } = this.props;
-    const firstAccount = !isEmpty(accounts) && accounts[0];
     return (
       <div className="container">
         <div className="pad-1">{this.renderFlag()}</div>
@@ -41,10 +32,5 @@ class Homepage extends React.Component {
     );
   }
 }
-
-Homepage.childContextTypes = {
-  web3: PropTypes.object,
-  accounts: PropTypes.array
-};
 
 export default Homepage;
