@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
+import "./AppContainer.css";
 import AppBar from "material-ui/AppBar";
 import RaisedButton from "material-ui/RaisedButton";
 
@@ -29,10 +30,10 @@ class AppContainer extends React.Component {
         <AppBar
           showMenuIconButton={false}
           title={
-            <a
-              onClick={() => {
-                this.props.history.push("/");
-              }}
+            <a href="/" onClick={event => {
+                event.preventDefault()
+                this.props.history.push("/")
+              }} className="logo"
             >
               Absentee Voting
             </a>
