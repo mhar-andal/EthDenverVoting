@@ -31,6 +31,15 @@ export default class Elections {
       }))
   }
 
+  vote(election, index) {
+    console.log('vote', election, index)
+    return this._sendTransaction('vote', election, index)
+  }
+  getNumVotes(election, index) {
+    return this._call('getVotes', election, index)
+  }
+
+
 
   _call(fnName, ...args) {
     return new Promise((resolve, reject) => {

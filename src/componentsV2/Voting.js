@@ -21,7 +21,11 @@ class Voting extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  componentWillMount() {
+    this.refreshCandidates()
+  }
+
+  refreshCandidates = async () => {
     const election = 'e1' // FIXME, get from the path, probably
     const numCandidates = await this.context.elections.getNumCandidates(election)
     const candidateIndexes = []
@@ -34,11 +38,12 @@ class Voting extends React.Component {
     })
   }
 
-  handleSubmit = id => {
-    if (!id) {
-      return;
-    }
-    // vote
+  handleSubmit = proxySomething => {
+    const candidateIndex = this.state.currentlySelected
+    if (typeof candidateIndex !== 'number') return
+    const election = 'e1' // FIXME, get from the path, probably
+    this.context.elections.vote(election, candidateIndex)
+      .then(() => this.refreshCandidates())
   };
 
   renderTableRow = (id, {address, name, numVotes}, party) => {
