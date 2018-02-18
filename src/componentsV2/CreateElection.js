@@ -92,7 +92,6 @@ class CreateElection extends React.Component {
   };
 
   render() {
-    const { accounts } = this.props;
     return (
       <div className="container">
         <h1>Welcome to the Election Creator.</h1>

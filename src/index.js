@@ -5,15 +5,6 @@
 import App from "./componentsV2/App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
-import {
-  blueA700,
-  blueA400,
-  redA700,
-  white,
-  darkBlack,
-  fullBlack
-} from "material-ui/styles/colors";
-import spacing from "material-ui/styles/spacing";
 import React from "react";
 import ReactDOM from "react-dom";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
