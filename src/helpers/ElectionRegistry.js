@@ -15,18 +15,12 @@ export default class ElectionRegistry {
     this.contract = contract;
     this.web3 = web3;
 
-    const getElectionContract = Promise.promisify(
-      this.contract.getElectionContract.call,
-      { context: this.contract.getElectionContract }
-    );
-
     const getTransaction = Promise.promisify(
       this.contract._eth.getTransaction,
       { context: this.contract._eth }
     );
 
     this.methods = {
-      getElectionContract,
       getTransaction
     };
   }
@@ -49,7 +43,13 @@ export default class ElectionRegistry {
   }
 
   async fetchElectionContract(title) {
-    const electionContract = await this.methods.getElectionContract(title);
+    while(title.length < 32)
+      title = title + " "
+    return await new Promise((resolve, reject) => {
+      asciiToHex(title),
+        { from: this.web3.eth.accounts[0] },
+        (err, result) => resolve(result)
+    })
   }
 
   async newElection(title) {

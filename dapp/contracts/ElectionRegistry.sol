@@ -26,13 +26,13 @@ contract ElectionRegistry {
         if (election == 0x0) {
             revert();
         }
-        uint id = (electionList.push(election) - 1);
+        uint id = electionList.push(election) - 1;
         getContract[id] = election;
         return _title;
     }
 
     function getElectionContract(uint id) view public returns(address) {
-        return (getContract[id]);
+        return getContract[id];
     }
 
     function addVoter(address _voterAddress) onlyRegistryOwner public {
