@@ -32,8 +32,7 @@ contract ElectionRegistry {
     }
 
     function getElectionContract(bytes32 _title) view public returns(address) {
-        //return getContract[_title];
-        return this.getContract(0);
+        return getContract[_title];
     }
 
     function addVoter(address _voterAddress) onlyRegistryOwner public {

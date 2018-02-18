@@ -1,6 +1,5 @@
 import Promise from "bluebird";
 import Web3 from "web3";
-import { promisify } from "util";
 
 const { asciiToHex, hexToAscii } =
   // web3 1.X
@@ -42,32 +41,34 @@ export default class ElectionRegistry {
     throw new Error("Timed out waiting for votes to be recorded in a block.");
   }
 
-  async fetchElectionContract(title) {
-    console.log("hi")
+  fetchElectionContract(title) {
     while(title.length < 32)
       title = title + " "
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.contract.getElectionContract.call(
-      asciiToHex(title),
+        asciiToHex(title),
         { from: this.web3.eth.accounts[0] },
-        (err, result) => {console.log(err, result); resolve(result)}
+        (err, election) => resolve(election)
       )
     })
   }
 
-  async newElection(title) {
+  newElection(title) {
     while(title.length < 32)
       title = title + " "
 
     // if you use Promise.promisify, it will return err instead of result >.<
     return new Promise((resolve, reject) => {
-      this.contract.newElection.call(
+      this.contract.newElection.sendTransaction(
         asciiToHex(title),
         { from: this.web3.eth.accounts[0],
           gas: 1000000,
           gasPrice: 300
         },
-        (err, result) => {this.fetchElectionContract(title), resolve(hexToAscii(result))}
+        async (err, transaction) => {
+          await this.waitForBlock(transaction)
+          resolve(this.fetchElectionContract(title))
+        }
       )
     })
   }
