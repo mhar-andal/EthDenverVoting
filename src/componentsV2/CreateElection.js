@@ -59,18 +59,19 @@ class CreateElection extends React.Component {
     });
   }
 
-  handleSubmit = () => {
-    // const textField = createTextInput("Add Candidate", console.log);
-    // this.setState({
-    //   textFields: [...this.state.textFields, textField]
-    // });
-    const name = this.state.formFields.electionName
-    const candidateNames = [
-      this.state.formFields.candidateFieldNames.candidate1.name,
-      this.state.formFields.candidateFieldNames.candidate2.name,
-    ]
-
-    this.context.elections.createElection(name)
+  handleSubmit = async () => {
+    const election = this.state.formFields.electionName
+    await this.context.elections.createElection(election)
+    await this.context.elections.addCandidate(
+      election,
+      1, // FIXME
+      this.state.formFields.candidateFieldNames.candidate1.name
+    )
+    await this.context.elections.addCandidate(
+      election,
+      2, // FIXME
+      this.state.formFields.candidateFieldNames.candidate1.name
+    )
   };
 
   handleCandidateName = (value, candidateId) => {
