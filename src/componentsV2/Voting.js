@@ -9,15 +9,16 @@ import {
   TableRowColumn
 } from "material-ui/Table";
 import FlatButton from "material-ui/FlatButton";
-import PropTypes from 'prop-types';
-import { map } from 'bluebird'
+import PropTypes from "prop-types";
+import { map } from "bluebird";
 
 class Voting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       candidates: [],
-      currentlySelected: null
+      currentlySelected: null,
+      electionName: this.props.match.params.electionName
     };
   }
 
@@ -26,23 +27,23 @@ class Voting extends React.Component {
   }
 
   refreshCandidates = async () => {
-    const election = 'e1' // FIXME, get from the path, probably
-    const numCandidates = await this.context.elections.getNumCandidates(election)
+    const { electionName } = this.state
+    const numCandidates = await this.context.elections.getNumCandidates(electionName)
     const candidateIndexes = []
     for(let i=0; i<numCandidates; ++i)
       candidateIndexes.push(i)
     this.setState({
       candidates: await map(candidateIndexes, i =>
-        this.context.elections.getCandidateByIndex(election, i)
+        this.context.elections.getCandidateByIndex(electionName, i)
       )
-    })
+    });
   }
 
   handleSubmit = proxySomething => {
     const candidateIndex = this.state.currentlySelected
     if (typeof candidateIndex !== 'number') return
-    const election = 'e1' // FIXME, get from the path, probably
-    this.context.elections.vote(election, candidateIndex)
+    const { electionName } = this.state
+    this.context.elections.vote(electionName, candidateIndex)
       .then(() => this.refreshCandidates())
   };
 
@@ -60,9 +61,10 @@ class Voting extends React.Component {
   render() {
     return (
       <div className="container">
+        Election Title: {this.state.electionName}
         <Table
           onCellClick={thing => {
-            this.setState({currentlySelected: thing});
+            this.setState({ currentlySelected: thing });
           }}
           selectable={true}
         >
@@ -100,7 +102,7 @@ class Voting extends React.Component {
 }
 
 Voting.contextTypes = {
-  elections: PropTypes.object,
+  elections: PropTypes.object
 };
 
 export default Voting;
