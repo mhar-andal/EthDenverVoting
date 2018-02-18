@@ -13,13 +13,19 @@ export default class ElectionRegistry {
     );
 
     const newElection = Promise.promisify(
-      this.contract.newElection.sendTransaction,
+      this.contract.newElection.call,
       { context: this.contract.newElection }
+    );
+
+    const getTransaction = Promise.promisify(
+      this.contract._eth.getTransaction,
+      { context: this.contract._eth },
     );
 
     this.methods = {
       getElectionContract,
-      newElection
+      newElection,
+      getTransaction,
     };
   }
 
@@ -44,8 +50,11 @@ export default class ElectionRegistry {
   }
 
   async newElection(title, address) {
-    return this.methods.newElection("poop", {
-      from: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    const tx = await this.methods.newElection("poop", {
+      from: this.web3.eth.accounts[0],
+      gas: 1000000,
+      gasPrice: 300,
     });
+    await this.waitForBlock(tx)
   }
 }
