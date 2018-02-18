@@ -70,7 +70,7 @@ class CreateElection extends React.Component {
     await this.context.elections.addCandidate(
       election,
       2, // FIXME
-      this.state.formFields.candidateFieldNames.candidate1.name
+      this.state.formFields.candidateFieldNames.candidate2.name
     )
     this.props.history.push('/')
   };
