@@ -10,11 +10,21 @@ contract Elections {
     bytes32 id;
     Candidate[] candidates;
   }
-
   mapping(bytes32 => ElectionStruct) elections;
+  ElectionStruct[] electionList;
 
   function createElection(bytes32 election) public {
     elections[election].id = election;
+    electionList.push(elections[election]);
+  }
+
+  function getNumElections() public view returns (uint256) {
+    return electionList.length;
+  }
+
+  function getElection(uint256 index) public view returns (bytes32 id, uint256 numCandidates) {
+    ElectionStruct memory e = electionList[index];
+    return (e.id, e.candidates.length);
   }
 
   function addCandidate(bytes32 election, address key, string name) public {
