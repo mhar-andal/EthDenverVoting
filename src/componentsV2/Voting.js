@@ -61,7 +61,7 @@ class Voting extends React.Component {
   render() {
     return (
       <div className="container">
-        Election Title: {this.state.electionName}
+        <h1>{this.state.electionName}</h1>
         <Table
           onCellClick={thing => {
             this.setState({ currentlySelected: thing });
