@@ -7,14 +7,27 @@ export default class Elections {
     this.account = account
   }
 
-  createElection(electionName) {
-    return this._sendTransaction('createElection', electionName)
+  createElection(electionName, closesAt) {
+    closesAt = closesAt || new Date()
+    const closesAtSec = parseInt(
+      (closesAt.getTime() - closesAt.getMilliseconds()) / 1000
+    )
+    console.log('ENTERING CLOSES AT:', closesAtSec)
+    return this._sendTransaction('createElection', electionName, closesAtSec)
   }
   getNumElections() {
     throw new Error("Not implemented");
   }
   getElectionByIndex(index) {
     throw new Error("Not implemented");
+  }
+  getElectionByName(name) {
+    return this._call('getElectionById', name)
+      .then(([id, numCandidates, secondsLeft]) => {
+        const closesAt = new Date()
+        closesAt.setTime(1000*secondsLeft)
+        return { numCandidates, closesAt }
+      })
   }
 
 

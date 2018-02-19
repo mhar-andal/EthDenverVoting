@@ -28,7 +28,8 @@ class Voting extends React.Component {
 
   refreshCandidates = async () => {
     const { electionName } = this.state
-    const numCandidates = await this.context.elections.getNumCandidates(electionName)
+    const { numCandidates, closesAt } = await this.context.elections.getElectionByName(electionName)
+    console.log(closesAt)
     const candidateIndexes = []
     for(let i=0; i<numCandidates; ++i)
       candidateIndexes.push(i)

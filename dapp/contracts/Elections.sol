@@ -8,14 +8,16 @@ contract Elections {
   }
 
   struct ElectionStruct {
-    bytes32 id;
+    bytes32     id;
     Candidate[] candidates;
+    uint        closesAt;
   }
   mapping(bytes32 => ElectionStruct) elections;
   ElectionStruct[] electionList;
 
-  function createElection(bytes32 election) public {
+  function createElection(bytes32 election, uint closesAt) public {
     elections[election].id = election;
+    elections[election].closesAt = closesAt;
     electionList.push(elections[election]);
   }
 
@@ -23,9 +25,14 @@ contract Elections {
     return electionList.length;
   }
 
-  function getElection(uint256 index) public view returns (bytes32 id, uint256 numCandidates) {
+  function getElectionByIndex(uint256 index) public view returns (bytes32 id, uint256 numCandidates, uint timeLeft) {
     ElectionStruct memory e = electionList[index];
-    return (e.id, e.candidates.length);
+    return (e.id, e.candidates.length, e.closesAt);
+  }
+
+  function getElectionById(bytes32 election) public view returns (bytes32 id, uint256 numCandidates, uint timeLeft) {
+    ElectionStruct memory e = elections[election];
+    return (e.id, e.candidates.length, e.closesAt);
   }
 
   function addCandidate(bytes32 election, address key, string name) public {

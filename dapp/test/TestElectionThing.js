@@ -17,7 +17,12 @@ contract('Elections', function(accounts) {
   const voter3 = accounts[3]
 
   it("happy path", function() {
+    // election
     const e = strToBytes32("my election")
+    const oneSecond = (d => {
+      d.setSeconds(d.getSeconds() + 1)
+      return parseInt(+d/1000)
+    })(new Date())
 
     // candidate 1
     const c1keyInt = 5 // strToAddress("c1key")
@@ -29,8 +34,6 @@ contract('Elections', function(accounts) {
     const c2keyStr = "0x0000000000000000000000000000000000000006"
     const c2name   = "Percy Person"
 
-    // voter 1
-
     let elections;
 
     return Elections.deployed()
@@ -38,12 +41,17 @@ contract('Elections', function(accounts) {
 
       // create the election
       .then(() => elections.getNumElections()).then(n => assert.equal(n, 0, "Shouldn't have elections!"))
-      .then(() => elections.createElection(e, {from: owner}))
+      .then(() => elections.createElection(e, +oneSecond, {from: owner}))
       .then(() => elections.getNumElections()).then(n => assert.equal(n, 1, "Election wasn't created"))
-      .then(() => elections.getElection.call(0))
-      .then(([name, numCandidates]) => {
+      .then(() => elections.getElectionByIndex.call(0)).then(([name, numCandidates, closesAt]) => {
         assert.equal(name, e, "Names don't match!")
         assert.equal(numCandidates, 0, "Where did this candidate come from?!")
+        assert.equal(closesAt, oneSecond, "There should be one second left")
+      })
+      .then(() => elections.getElectionById.call(e)).then(([name, numCandidates, closesAt]) => {
+        assert.equal(name, e, "Names don't match!")
+        assert.equal(numCandidates, 0, "Where did this candidate come from?!")
+        assert.equal(closesAt, oneSecond, "There should be one second left")
       })
 
       // add candidates
