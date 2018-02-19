@@ -30,10 +30,10 @@ class AppContainer extends React.Component {
         <AppBar
           showMenuIconButton={false}
           title={
-            <a href="/" onClick={event => {
+            <a href="/" className="logo" onClick={event => {
                 event.preventDefault()
                 this.props.history.push("/")
-              }} className="logo"
+            }}
             >
               Absentee Voting
             </a>
