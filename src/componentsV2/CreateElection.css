@@ -10,3 +10,8 @@
 .submit {
   background-color: #b70b2a;
 }
+
+.button-submit {
+  position: absolute;
+  margin-top: 119px;
+}

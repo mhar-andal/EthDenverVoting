@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import DatePicker from "material-ui/DatePicker";
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
 import "./Utils.css";
@@ -22,11 +23,13 @@ class CreateElection extends React.Component {
     super(props);
     this.state = {
       formFields: {
+        disableButton: false,
         electionName: "",
         candidateFieldNames: {
           candidate1: { name: "" },
           candidate2: { name: "" }
-        }
+        },
+        deadlineDate: null
       },
       web3: props.web3,
       textFields: []
@@ -53,7 +56,20 @@ class CreateElection extends React.Component {
     });
   }
 
+  handleDatePicker = value => {
+    console.log("val", value);
+    this.setState({
+      formFields: {
+        ...this.state.formFields,
+        deadlineDate: value
+      }
+    });
+  };
+
   handleSubmit = async () => {
+    this.setState({
+      disableButton: true
+    });
     const election = this.state.formFields.electionName;
     await this.context.elections.createElection(election);
     await this.context.elections.addCandidate(
@@ -96,15 +112,28 @@ class CreateElection extends React.Component {
       <div className="container">
         <h1>Welcome to the Election Creator.</h1>
         {this.state.textFields.map((TextField, i) => <TextField key={i} />)}
-        <span className="f-left">
+
+        <div className="f-left display-block">
+          <DatePicker
+            hintText="End Date"
+            onChange={(_, date) => {
+              this.handleDatePicker(date);
+            }}
+            fullWidth={true}
+            minDate={new Date()}
+          />
+        </div>
+
+        <div className="display-block button-submit">
           <FlatButton
+            disabled={this.state.disableButton}
             className="submit-button"
             hoverColor="#b70b2a"
             backgroundColor="rgb(0, 40, 104)"
             label="Submit"
             onClick={this.handleSubmit}
           />
-        </span>
+        </div>
       </div>
     );
   }
