@@ -8,11 +8,9 @@ export default class Elections {
   }
 
   createElection(electionName, closesAt) {
-    closesAt = closesAt || new Date()
     const closesAtSec = parseInt(
       (closesAt.getTime() - closesAt.getMilliseconds()) / 1000
     )
-    console.log('ENTERING CLOSES AT:', closesAtSec)
     return this._sendTransaction('createElection', electionName, closesAtSec)
   }
   getNumElections() {

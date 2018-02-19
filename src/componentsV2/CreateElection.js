@@ -71,7 +71,10 @@ class CreateElection extends React.Component {
       disableButton: true
     });
     const election = this.state.formFields.electionName;
-    await this.context.elections.createElection(election);
+    await this.context.elections.createElection(
+      election,
+      this.state.formFields.deadlineDate
+    );
     await this.context.elections.addCandidate(
       election,
       1, // FIXME
